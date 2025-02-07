@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "0Hq8l+zAwKk=",
+  "success": true,
+  "projectFilePath": "D:\\.NET\\API\\Real Projecct\\SurveyBasket\\SurveyBasket\\SurveyBasket.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\hi\\.nuget\\packages\\microsoft.aspnetcore.openapi\\9.0.0\\microsoft.aspnetcore.openapi.9.0.0.nupkg.sha512",
+    "C:\\Users\\hi\\.nuget\\packages\\microsoft.openapi\\1.6.17\\microsoft.openapi.1.6.17.nupkg.sha512",
+    "C:\\Users\\hi\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\7.2.0\\swashbuckle.aspnetcore.swaggerui.7.2.0.nupkg.sha512"
+  ],
+  "logs": []
+}

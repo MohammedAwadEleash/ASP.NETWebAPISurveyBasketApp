@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\SurveyBasket.props" />
-</Project>

@@ -1,4 +1,5 @@
 ﻿
+
 namespace SurveyBasket.Services
 {
     public interface IAuthService

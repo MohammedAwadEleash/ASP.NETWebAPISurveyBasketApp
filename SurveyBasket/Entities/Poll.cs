@@ -1,6 +1,6 @@
 ﻿namespace SurveyBasket.Entities
 {
-    public sealed class Poll
+    public sealed class Poll : BaseEntity
     {
 
         public int Id { get; set; }

@@ -6,10 +6,9 @@ namespace SurveyBasket.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class AuthController(IAuthService authService,IOptions<JwtOptions> jwtOptions) : ControllerBase
+    public class AuthController(IAuthService authService) : ControllerBase
     {
         private readonly IAuthService _authService = authService;
-        private readonly JwtOptions _jwtOptions = jwtOptions.Value;
 
         [HttpPost("")]
 
@@ -19,10 +18,9 @@ namespace SurveyBasket.Controllers
             var authResult= await _authService.GetTokenAsync(request.Email, request.Password, cancellationToken);
 
 
-            if (authResult is null)
-                return BadRequest("Invalid email/password");
 
-            return Ok (authResult);
+            return authResult.IsSuccess ? Ok(authResult.Value) : authResult.ToProblem(StatusCodes.Status400BadRequest);
+
         }
         [HttpPost("refresh")]
 
@@ -32,10 +30,8 @@ namespace SurveyBasket.Controllers
             var authResult = await _authService.GetRefreshTokenAsync(request.Token, request.RefreshToken, cancellationToken);
 
 
-            if (authResult is null)
-                return BadRequest("Invalid token");
-
-            return Ok(authResult);
+            return authResult.IsSuccess ? Ok(authResult.Value) : authResult.ToProblem(StatusCodes.Status400BadRequest);
+          
         }
 
         [HttpPost("revoke-refresh-token")]
@@ -43,12 +39,12 @@ namespace SurveyBasket.Controllers
         public async Task<IActionResult> RevokeRefreshTokenAsync([FromBody] RefreshTokenRequest request, CancellationToken cancellationToken)
         {
 
-            var isRevoked = await _authService.RevokeRefreshTokenAsync(request.Token, request.RefreshToken, cancellationToken);
+            var result = await _authService.RevokeRefreshTokenAsync(request.Token, request.RefreshToken, cancellationToken);
 
-            if (!isRevoked)
-                return BadRequest("Operation failed");
-            
-            return Ok(isRevoked);
+            return result.IsSuccess ? Ok() : result.ToProblem(StatusCodes.Status400BadRequest);
+
+
         }
     }
-}
+    }
+

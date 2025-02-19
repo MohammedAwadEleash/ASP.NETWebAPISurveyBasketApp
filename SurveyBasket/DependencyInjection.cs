@@ -16,14 +16,15 @@ public static class DependencyInjection
     {
         services.AddControllers();
 
-        services.AddCors(options =>
-            options.AddDefaultPolicy(builder =>
-                builder
-                    .AllowAnyMethod()
-                    .AllowAnyHeader()
-                    .WithOrigins(configuration.GetSection("AllowedOrigins").Get<string[]>()!)
-            )
-        );
+        //services.AddCors(options =>
+        //    options.AddDefaultPolicy(builder =>
+        //        builder
+        //            .AllowAnyMethod()
+        //            .AllowAnyHeader()
+        //            .WithOrigins(configuration.GetSection("AllowedOrigins").Get<string[]>()!)
+        //    )
+
+        //);
 
 
         services.AddAuthConfig(configuration);

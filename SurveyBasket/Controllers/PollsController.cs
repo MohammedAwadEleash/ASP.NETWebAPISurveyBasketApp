@@ -27,7 +27,7 @@ public class PollsController(IPollService pollService) : ControllerBase
         var result = await _pollService.GetAsync(id, cancellationToken);
         return result.IsSuccess
                   ? Ok(result.Value)
-                  : result.ToProblem(StatusCodes.Status404NotFound);
+                  : result.ToProblem();
     }
         [HttpPost("")]
     public async Task<IActionResult> Add([FromBody] PollRequest request,
@@ -35,7 +35,9 @@ public class PollsController(IPollService pollService) : ControllerBase
     {
         var result = await _pollService.AddAsync(request, cancellationToken);
 
-           return  CreatedAtAction(nameof(Get), new { id = result.Value.Id }, result.Value);
+        return result.IsSuccess ?
+       CreatedAtAction(nameof(Get), new { id = result.Value.Id }, result.Value)
+       : result.ToProblem();
     }
 
     [HttpPut("{id}")]
@@ -44,7 +46,7 @@ public class PollsController(IPollService pollService) : ControllerBase
     {
         var result = await _pollService.UpdateAsync(id, request, cancellationToken);
 
-        return result.IsSuccess ? NoContent() :   result.ToProblem(StatusCodes.Status404NotFound);
+        return result.IsSuccess ? NoContent() :   result.ToProblem();
     }
 
         [HttpDelete("{id}")]
@@ -52,7 +54,8 @@ public class PollsController(IPollService pollService) : ControllerBase
     {
         var result = await _pollService.DeleteAsync(id, cancellationToken);
 
-        return result.IsSuccess ? NoContent() : result.ToProblem(StatusCodes.Status404NotFound);
+        return result.IsSuccess ? NoContent() : 
+            result.ToProblem();
     }
 
     [HttpPut("{id}/togglePublish")]
@@ -60,7 +63,7 @@ public class PollsController(IPollService pollService) : ControllerBase
     {
         var result = await _pollService.TogglePublishStatusAsync(id, cancellationToken);
 
-        return result.IsSuccess ? NoContent() : result.ToProblem(StatusCodes.Status404NotFound);
+        return result.IsSuccess ? NoContent() : result.ToProblem();
 
     }
 }

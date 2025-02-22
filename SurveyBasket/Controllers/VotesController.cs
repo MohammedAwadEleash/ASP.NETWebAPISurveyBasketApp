@@ -15,6 +15,7 @@ namespace SurveyBasket.Controllers
         public async Task<IActionResult> Start([FromRoute] int pollId , CancellationToken cancellationToken)
         {
             var result = await _questionService.GetAvailableAsync(pollId, User.GetUserId()!, cancellationToken);
+            //  this function is  gets available Questions and Answers
 
             return result.IsSuccess ? Ok( result.Value) : result.ToProblem();
         }

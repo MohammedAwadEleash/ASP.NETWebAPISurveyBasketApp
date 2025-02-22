@@ -25,7 +25,9 @@ namespace SurveyBasket.Services
             return Result.Success<IEnumerable<PollResponse>>(pollResponse);
 
 
-        }
+        }        
+        
+        // this function => gets only available Polls
         public async Task<Result<IEnumerable<PollResponse>>> GetCurrentAsync(CancellationToken cancellationToken = default)
         {
             var pollResponse = await _context.Polls.Where(p=>p.IsPublished && p.StartsAt <= DateOnly.FromDateTime(DateTime.UtcNow) && p.EndsAt>= DateOnly.FromDateTime(DateTime.UtcNow))
@@ -104,7 +106,7 @@ namespace SurveyBasket.Services
             return Result.Success();
 
         }
-        public async Task<Result> TogglePublishStatusAsync(int id, CancellationToken cancellationToken )
+        public async Task<Result> TogglePublishStatusAsync(int id, CancellationToken cancellationToken =default)
         {
 
             var poll = await _context.Polls.FindAsync(id, cancellationToken);

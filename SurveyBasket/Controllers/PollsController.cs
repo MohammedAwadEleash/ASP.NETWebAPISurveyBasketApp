@@ -23,6 +23,7 @@ public class PollsController(IPollService pollService) : ControllerBase
     public async Task<IActionResult> GetCurrent(CancellationToken cancellationToken)
     {
         var pollsResult = await _pollService.GetCurrentAsync(cancellationToken);
+        // this function => gets only available Polls
 
         var response = pollsResult.Value;
 

@@ -38,6 +38,7 @@ namespace SurveyBasket.Services
         }
 
 
+        // this function => gets available Questions and Answers
        public async  Task<Result<IEnumerable<QuestionResponse>>> GetAvailableAsync(int pollId, string userId, CancellationToken cancellationToken = default)
         {
             var hasVote = await _context.Votes.AnyAsync(v =>v.PollId==pollId && v.UserId == userId,cancellationToken);

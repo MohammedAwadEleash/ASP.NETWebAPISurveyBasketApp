@@ -15,7 +15,7 @@ namespace SurveyBasket.Persistence
         public   DbSet<Answer> Answers { set; get; }
         public   DbSet<Question> Questions { set; get; }
         public   DbSet<Vote> Votes { set; get; }
-        public   DbSet<VoteAnswer> voteAnswers { set; get; }
+        public   DbSet<VoteAnswer> VoteAnswers { set; get; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

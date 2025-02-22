@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using System.Reflection.Metadata.Ecma335;
-
+﻿
 namespace SurveyBasket.Controllers;
 
 [Route("api/[controller]")]
@@ -15,6 +13,16 @@ public class PollsController(IPollService pollService) : ControllerBase
     public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
     {
         var pollsResult = await _pollService.GetAllAsync(cancellationToken);
+
+        var response = pollsResult.Value;
+
+        return Ok(response);
+    }
+
+    [HttpGet("current")]
+    public async Task<IActionResult> GetCurrent(CancellationToken cancellationToken)
+    {
+        var pollsResult = await _pollService.GetCurrentAsync(cancellationToken);
 
         var response = pollsResult.Value;
 

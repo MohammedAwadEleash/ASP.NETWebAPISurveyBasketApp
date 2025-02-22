@@ -11,27 +11,33 @@ namespace SurveyBasket.Services
     {
 
         private readonly ApplicationDbContext _context = context;
-        private static readonly List<Poll> _polls = [
-            new Poll
-            {
-            Id=1,
-            Title= "Poll 1",
-            Summary="My First Pool"
-            }
-            ];
-
+      
 
 
         public async Task<Result<IEnumerable<PollResponse>>> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            var polls = await _context.Polls.AsNoTracking().ToListAsync(cancellationToken);
+            var pollResponse = await _context.Polls.AsNoTracking()
+                .ProjectToType<PollResponse>()
+                .ToListAsync(cancellationToken);
 
-          var pollResponse = polls.Adapt<IEnumerable<PollResponse>>();
-            return Result.Success(pollResponse);
+
+
+            return Result.Success<IEnumerable<PollResponse>>(pollResponse);
 
 
         }
-       public  async  Task<Result<PollResponse>> GetAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<Result<IEnumerable<PollResponse>>> GetCurrentAsync(CancellationToken cancellationToken = default)
+        {
+            var pollResponse = await _context.Polls.Where(p=>p.IsPublished && p.StartsAt <= DateOnly.FromDateTime(DateTime.UtcNow) && p.EndsAt>= DateOnly.FromDateTime(DateTime.UtcNow))
+                .AsNoTracking()
+              .ProjectToType<PollResponse>()
+              .ToListAsync(cancellationToken);
+
+            return Result.Success<IEnumerable<PollResponse>>(pollResponse);
+
+        }
+
+        public async  Task<Result<PollResponse>> GetAsync(int id, CancellationToken cancellationToken = default)
 
         {
            var poll=  await _context.Polls.FindAsync(id, cancellationToken);

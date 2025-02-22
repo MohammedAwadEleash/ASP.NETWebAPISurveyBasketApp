@@ -14,6 +14,9 @@ namespace SurveyBasket.Persistence
         public   DbSet<Poll> Polls { set; get; }
         public   DbSet<Answer> Answers { set; get; }
         public   DbSet<Question> Questions { set; get; }
+        public   DbSet<Vote> Votes { set; get; }
+        public   DbSet<VoteAnswer> voteAnswers { set; get; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -35,7 +38,7 @@ namespace SurveyBasket.Persistence
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken)
         {
-            var currentUserId = _httpContextAccessor.HttpContext?.User.FindFirstValue (ClaimTypes.NameIdentifier)!;
+            var currentUserId = _httpContextAccessor.HttpContext?.User.GetUserId();
             var entries = ChangeTracker.Entries<BaseEntity>();
             foreach (var entityEntry in entries)
             {

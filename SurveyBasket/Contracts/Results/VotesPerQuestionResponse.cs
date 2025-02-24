@@ -3,6 +3,6 @@
     public record VotesPerQuestionResponse
     (
         string Question, 
-        IEnumerable<VotesPerAnswerResponse> SelectedAnswer
+        IEnumerable<VotesPerAnswerResponse> SelectedAnswers
         );
 }

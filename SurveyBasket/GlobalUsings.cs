@@ -20,6 +20,8 @@ global using SurveyBasket.Errors;
 global using SurveyBasket.Extensions;
 global using SurveyBasket.Contracts.Votes;
 global using SurveyBasket.Contracts.Results;
+global using SurveyBasket.Contracts.Answers;
+
 
 
 

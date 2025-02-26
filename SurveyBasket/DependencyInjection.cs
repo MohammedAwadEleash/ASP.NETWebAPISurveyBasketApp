@@ -6,6 +6,9 @@ using SurveyBasket.Authentication;
 using System.Reflection;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using SurveyBasket.Settings;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Hangfire;
 
 namespace SurveyBasket;
 
@@ -48,9 +51,18 @@ public static class DependencyInjection
         services.AddScoped<IQuestionService, QuestionService>();
         services.AddScoped<IVoteService, VoteService>();
         services.AddScoped<IResultService, ResultService>();
+        services.AddTransient<INotificationService, NotificationServics>();
+
+        services.AddScoped<IEmailSender, EmailService>();
+
+        services.AddHttpContextAccessor();
+
+
 
         services.AddExceptionHandler<GlobalExceptionHandeler>();
         services.AddProblemDetails();
+        services.AddBackgroundJobsConfig(configuration);
+        services.Configure<MailSettings>(configuration.GetSection(nameof(MailSettings)));
 
         return services;
     }
@@ -87,7 +99,7 @@ public static class DependencyInjection
         IConfiguration configuration)
     {
         services.AddIdentity<ApplicationUser, IdentityRole>()
-          .AddEntityFrameworkStores<ApplicationDbContext>();
+          .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 
 
         services.AddSingleton<IJwtProvider, JwtProvider>();
@@ -119,6 +131,37 @@ public static class DependencyInjection
                 ValidAudience = jwtSettings?.Audience
             };
         });
+
+        services.Configure<IdentityOptions>(options => {
+
+            options.Password.RequiredLength = 8;
+            options.SignIn.RequireConfirmedEmail = true;
+            options.User.RequireUniqueEmail = true;
+            
+            
+                     
+        });
+
+
+        return services;
+    }
+
+
+
+
+
+    private static IServiceCollection AddBackgroundJobsConfig(this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        // Add Hangfire services.
+        services.AddHangfire(config => config
+            .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+            .UseSimpleAssemblyNameTypeSerializer()
+            .UseRecommendedSerializerSettings()
+            .UseSqlServerStorage(configuration.GetConnectionString("HangfireConnection")));
+
+        // Add the processing server as IHostedService
+        services.AddHangfireServer();
 
         return services;
     }

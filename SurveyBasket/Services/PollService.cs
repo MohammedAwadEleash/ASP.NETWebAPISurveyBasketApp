@@ -1,5 +1,6 @@
 ﻿
 using Azure.Core;
+using Hangfire;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -7,12 +8,11 @@ using System.Threading;
 namespace SurveyBasket.Services
 {
 
-    public class PollService(ApplicationDbContext context) : IPollService
+    public class PollService(ApplicationDbContext context, INotificationService notificationService) : IPollService
     {
 
         private readonly ApplicationDbContext _context = context;
-      
-
+        private readonly INotificationService _notificationService = notificationService;
 
         public async Task<Result<IEnumerable<PollResponse>>> GetAllAsync(CancellationToken cancellationToken = default)
         {
@@ -117,6 +117,11 @@ namespace SurveyBasket.Services
             poll.IsPublished = !poll.IsPublished;
 
             await _context.SaveChangesAsync(cancellationToken);
+
+            if (poll.IsPublished && poll.StartsAt == DateOnly.FromDateTime(DateTime.UtcNow))
+                BackgroundJob.Enqueue(()=>_notificationService.SendNewPollsNotification(id));
+
+
             return Result.Success();
 
         }

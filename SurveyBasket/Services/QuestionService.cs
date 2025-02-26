@@ -22,7 +22,7 @@ namespace SurveyBasket.Services
 
             if (!pollIsExists)
                 return Result.Failure<IEnumerable<QuestionResponse>>(PollErrors.PollNotFound);
-
+             
 
 
             var questionsResponse = await _context.Questions.Where(q => q.PollId == pollId)

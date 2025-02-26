@@ -1,14 +1,31 @@
-﻿namespace SurveyBasket.Contracts.Authentication
+﻿using SurveyBasket.Abstractions.Consts;
+
+namespace SurveyBasket.Contracts.Authentication
 {
-    public class LoginRequestValidator : AbstractValidator<LoginRequest>
+    public class LoginRequestValidator : AbstractValidator<RegisterRequest>
     {
         public LoginRequestValidator()
         {
-            RuleFor(l => l.Email).NotEmpty().EmailAddress();
+            RuleFor(r => r.Email).NotEmpty().EmailAddress();
 
 
-            RuleFor(l => l.Password).NotEmpty();
+            RuleFor(r => r.Password).NotEmpty()
+                .Matches(RegexPatterns.Password)
+                            .WithMessage("Password should be at least 8 digits and should contains Lowercase, NonAlphanumeric and Uppercase");
+
+
+            RuleFor(r => r.FirstName).NotEmpty()
+                .Length(3, 100);
+
+            RuleFor(r => r.LastName).NotEmpty()
+                   .Length(3, 100);
+
+
+
+
+
         }
-        
+        }
+
     }
-}
+

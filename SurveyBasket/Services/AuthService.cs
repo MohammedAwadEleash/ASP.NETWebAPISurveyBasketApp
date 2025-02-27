@@ -10,6 +10,7 @@ using SurveyBasket.Helpers;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
+using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
 
 namespace SurveyBasket.Services
 {
@@ -177,7 +178,7 @@ namespace SurveyBasket.Services
         public async Task<Result> RegisterAsync(RegisterRequest request , CancellationToken cancellationToken = default)
         {
 
-            var emailIsExists = await _userManager.Users.AnyAsync(u => u.Email == request.Email);
+        var emailIsExists = await _userManager.Users.AnyAsync(x => x.Email == request.Email, cancellationToken);
 
 
             if (emailIsExists)
@@ -234,6 +235,8 @@ namespace SurveyBasket.Services
 
             try
             {
+                // Decoding code :
+
                 code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code))
 ;
 
@@ -263,6 +266,7 @@ namespace SurveyBasket.Services
 
 
         }
+
 
         public async Task<Result> ResendConfirmationEmailAsync (ResendConfirmationEmailRequest request)
         {
@@ -295,6 +299,75 @@ namespace SurveyBasket.Services
             return Result.Success();
         }
 
+        public async Task<Result> SendResetPasswordCodeAsync(ForgetPasswordRequest request)
+        {
+            var user = await _userManager.FindByEmailAsync(request.Email);
+
+            if (user is null)
+
+                return Result.Success();
+
+
+            if (!user.EmailConfirmed)
+                return Result.Failure(UserErrors.EmailNotConfirmed);
+
+            var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+
+            _logger.LogInformation("Reset token/code: {code}", code);
+
+            await SendResetPasswordEmail(user, code);
+
+            return Result.Success();
+        }
+
+
+        public async Task<Result> ResetPasswordAsync(ResetPasswordRequest request)
+        {
+            var user = await _userManager.FindByEmailAsync(request.Email);
+
+            if (user is null || !user.EmailConfirmed)
+
+                return Result.Failure(UserErrors.InvalidCode);
+            var code = request.Code;
+
+            try
+            {
+
+                // Decoding code:
+                code = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(code));
+
+
+
+            }
+            catch (FormatException)
+            {
+
+                return Result.Failure(UserErrors.InvalidCode);
+
+
+
+
+            }
+
+            var result = await _userManager.ResetPasswordAsync(user, code, request.NewPassword);
+
+
+
+            if (result.Succeeded)
+                return Result.Success();
+
+
+            var error = result.Errors.First();
+
+
+
+            return Result.Failure(new Error(error.Code, error.Description, StatusCodes.Status400BadRequest));
+
+
+
+        }
 
         private static string GenerateRefreshToken()
         {
@@ -325,5 +398,24 @@ namespace SurveyBasket.Services
 
            await   Task.CompletedTask;
         }
+
+        private async Task SendResetPasswordEmail(ApplicationUser user, string code)
+        {
+            var origin = _httpContextAccessor.HttpContext?.Request.Headers.Origin;
+
+            var emailBody = EmailBodyBuilder.GenerateEmailBody("ForgetPassword",
+                templateModel: new Dictionary<string, string>
+                {
+                { "{{name}}", user.FirstName },
+                { "{{action_url}}", $"{origin}/auth/forgetPassword?email={user.Email}&code={code}" }
+                }
+            );
+
+            BackgroundJob.Enqueue(() => _emailSender.SendEmailAsync(user.Email!, "✅ Survey Basket: Change Password", emailBody));
+
+            await Task.CompletedTask;
+        }
+
+
     }
 }

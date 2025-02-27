@@ -78,12 +78,37 @@ namespace SurveyBasket.Controllers
 
 
 
-        [HttpPost("resend-vonfirmation-email")]
+        [HttpPost("resend-confirmation-email")]
 
         public async Task<IActionResult> ResendConfirmationEmail([FromBody] ResendConfirmationEmailRequest request)
         {
 
             var authResult = await _authService.ResendConfirmationEmailAsync(request);
+
+
+            return authResult.IsSuccess ? Ok() : authResult.ToProblem();
+
+        }
+
+        [HttpPost("forget-password")]
+
+        public async Task<IActionResult> ForgetPassword([FromBody] ForgetPasswordRequest request)
+        {
+
+            var authResult = await _authService.SendResetPasswordCodeAsync(request);
+
+
+            return authResult.IsSuccess ? Ok() : authResult.ToProblem();
+
+        }
+
+
+        [HttpPost("reset-password")]
+
+        public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
+        {
+
+            var authResult = await _authService.ResetPasswordAsync(request);
 
 
             return authResult.IsSuccess ? Ok() : authResult.ToProblem();

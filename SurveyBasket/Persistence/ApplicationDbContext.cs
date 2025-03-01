@@ -1,13 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-using SurveyBasket.Persistence.EntitiesConfigurations;
-using System.Numerics;
-using System.Reflection;
-using System.Security.Claims;
 
+using System.Reflection;
 namespace SurveyBasket.Persistence
 {
-    public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,IHttpContextAccessor httpContextAccessor) : IdentityDbContext<ApplicationUser>(options)
+    public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,IHttpContextAccessor httpContextAccessor) 
+        : IdentityDbContext<ApplicationUser, ApplicationRole, string >(options)
     {
         private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
 

@@ -27,4 +27,4 @@ public static class UserErrors
         new("User.DuplicatedConfirmation", "Email already confirmed", StatusCodes.Status400BadRequest);
 
 
-}
+} 

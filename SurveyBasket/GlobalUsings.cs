@@ -6,6 +6,8 @@ global using Microsoft.Extensions.Options;
 global using Microsoft.AspNetCore.Authorization;
 global using Mapster;
 global using FluentValidation;
+global using Microsoft.AspNetCore.Identity;
+
 
 
 
@@ -21,6 +23,9 @@ global using SurveyBasket.Extensions;
 global using SurveyBasket.Contracts.Votes;
 global using SurveyBasket.Contracts.Results;
 global using SurveyBasket.Contracts.Answers;
+
+global using SurveyBasket.Abstractions.Consts;
+global using SurveyBasket.Authentication.Filters;
 
 
 

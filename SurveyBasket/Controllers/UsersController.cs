@@ -44,7 +44,7 @@ namespace SurveyBasket.Controllers
 
 
         [HttpPut("{id}")]
-        [HasPermission(Permissions.AddUsers)]
+        [HasPermission(Permissions.UpdateUsers)]
 
         public async Task<IActionResult> Update([FromRoute] string id, [FromBody] UpdateUserRequest request, CancellationToken cancellationToken)
         {
@@ -55,7 +55,7 @@ namespace SurveyBasket.Controllers
         }
 
         [HttpPut("{id}/togglestatus")]
-        [HasPermission(Permissions.UpdateRoles)]
+        [HasPermission(Permissions.UpdateUsers)]
         public async Task<IActionResult> ToggleStatus([FromRoute] string id)
         {
             var result = await _userService.ToggleStatusAsync(id);
@@ -65,7 +65,7 @@ namespace SurveyBasket.Controllers
         }
 
         [HttpPut("{id}/unlock")]
-        [HasPermission(Permissions.UpdateRoles)]
+        [HasPermission(Permissions.UpdateUsers)]
         public async Task<IActionResult> Unlock([FromRoute] string id)
         {
             var result = await _userService.UnlockAsync(id);

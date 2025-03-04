@@ -1,4 +1,5 @@
 ﻿
+using SurveyBasket.Contracts.Common;
 using SurveyBasket.Contracts.Questions;
 
 namespace SurveyBasket.Controllers
@@ -11,9 +12,10 @@ namespace SurveyBasket.Controllers
 
         [HttpGet("")]
         [HasPermission(Permissions.GetQuestions)]
-        public async Task<IActionResult> GetAll([FromRoute] int pollId ,CancellationToken cancellationToken)
+        public async Task<IActionResult> GetAll([FromRoute] int pollId, [FromQuery] RequestFilters filters ,CancellationToken cancellationToken)
         {
-            var result = await _questionService.GetAllAsync(pollId, cancellationToken);
+            var result = await _questionService.GetAllAsync(pollId, filters, cancellationToken);
+
 
             return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
 
@@ -39,6 +41,7 @@ namespace SurveyBasket.Controllers
 
         public async Task<IActionResult>Add([FromRoute] int pollId, [FromBody] QuestionRequest request, CancellationToken cancellationToken)
         {
+
 
             var result = await _questionService.AddAsync(pollId, request, cancellationToken);
 

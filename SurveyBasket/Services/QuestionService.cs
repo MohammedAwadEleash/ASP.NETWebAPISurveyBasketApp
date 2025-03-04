@@ -1,19 +1,19 @@
-﻿using Azure.Core;
-using Microsoft.Extensions.Caching.Hybrid;
-using SurveyBasket.Contracts.Answers;
+﻿using Microsoft.Extensions.Caching.Hybrid;
+using System.Linq.Dynamic.Core;
+using SurveyBasket.Contracts.Common;
 using SurveyBasket.Contracts.Questions;
 
 namespace SurveyBasket.Services
 {
-    public class QuestionService(ApplicationDbContext context, HybridCache  hybridCache, ILogger<QuestionService>logger) : IQuestionService
+    public class QuestionService(ApplicationDbContext context, HybridCache hybridCache, ILogger<QuestionService> logger) : IQuestionService
     {
         private readonly ApplicationDbContext _context = context;
         private readonly HybridCache _hybridCache = hybridCache;
         private readonly ILogger<QuestionService> _logger = logger;
 
-        private   const string _cachePrefix = "availableQuestions";
+        private const string _cachePrefix = "availableQuestions";
 
-        public async Task<Result<IEnumerable<QuestionResponse>>> GetAllAsync(int pollId, CancellationToken cancellationToken = default)
+        public async Task<Result<PaginatedList<QuestionResponse>>> GetAllAsync(int pollId, RequestFilters filters, CancellationToken cancellationToken = default)
         {
 
 
@@ -21,12 +21,28 @@ namespace SurveyBasket.Services
             var pollIsExists = await _context.Polls.AnyAsync(p => p.Id == pollId, cancellationToken: cancellationToken);
 
             if (!pollIsExists)
-                return Result.Failure<IEnumerable<QuestionResponse>>(PollErrors.PollNotFound);
-             
+                return Result.Failure<PaginatedList<QuestionResponse>>(PollErrors.PollNotFound);
 
 
-            var questionsResponse = await _context.Questions.Where(q => q.PollId == pollId)
-                .Include(q => q.Answers)
+
+            var query = _context.Questions
+                .Where(q => q.PollId == pollId );
+
+            if(!string.IsNullOrEmpty(filters.SearchValue))
+            {
+
+                query = query.Where(q => q.Content.Contains(filters.SearchValue));
+            }
+
+
+
+            if (!string.IsNullOrEmpty(filters.SortColumn))
+            {
+
+                query = query.OrderBy($"{filters.SortColumn} {filters.SortDirection}");
+            }
+
+                var source = query.Include(q => q.Answers)
                 //.Select(q=> new QuestionResponse(
 
                 //    q.Id,
@@ -35,11 +51,13 @@ namespace SurveyBasket.Services
 
                 //))
                 .ProjectToType<QuestionResponse>()
-                .AsNoTracking()
-                .ToListAsync(cancellationToken);
+                .AsNoTracking();
 
 
-            return Result.Success<IEnumerable<QuestionResponse>>(questionsResponse);
+        var questionResponse = await     PaginatedList<QuestionResponse>.CreateAsync(source, filters.PageNumber, filters.PageSize, cancellationToken);
+
+
+            return Result.Success(questionResponse);
         }
 
 

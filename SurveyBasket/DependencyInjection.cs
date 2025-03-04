@@ -53,6 +53,7 @@ public static class DependencyInjection
         services.AddScoped<IResultService, ResultService>();
         services.AddScoped<INotificationService, NotificationServics>();
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IRoleService, RoleService>();
 
         services.AddScoped<IEmailSender, EmailService>();
 

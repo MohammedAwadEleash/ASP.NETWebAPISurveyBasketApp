@@ -3,6 +3,7 @@ using Hangfire;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.WebUtilities;
 using SurveyBasket.Authentication;
+using SurveyBasket.Errors;
 using SurveyBasket.Helpers;
 using System.Security.Cryptography;
 using System.Text;
@@ -37,6 +38,10 @@ namespace SurveyBasket.Services
 
                 return Result.Failure<AuthResponse>(UserErrors.InvalidCredentials);
 
+            if(user.IsDisabled)
+                return Result.Failure<AuthResponse>(UserErrors.DisabledUser);
+
+
 
 
             //var isValidPassword=await _userManager.CheckPasswordAsync(user, password);
@@ -47,7 +52,7 @@ namespace SurveyBasket.Services
 
             //PasswordSignInAsync is  also  check of the confirmation email 
 
-            var result = await _signInManager.PasswordSignInAsync(user, password, false, false);
+            var result = await _signInManager.PasswordSignInAsync(user, password, false, true);
 
             if (result.Succeeded)
             {
@@ -82,7 +87,11 @@ namespace SurveyBasket.Services
                 return Result.Success<AuthResponse>(authResponse);
             }
 
-            return Result.Failure<AuthResponse>(result.IsNotAllowed ? UserErrors.EmailNotConfirmed : UserErrors.InvalidCredentials);
+            var error = result.IsNotAllowed ? UserErrors.EmailNotConfirmed
+                : result.IsLockedOut ? UserErrors.LockedUser
+                : UserErrors.InvalidCredentials;
+
+            return Result.Failure<AuthResponse>(error);
 
 
         }
@@ -105,10 +114,19 @@ namespace SurveyBasket.Services
                 return Result.Failure<AuthResponse>(UserErrors.InvalidJwtToken);
 
 
+            if (user.IsDisabled)
+                return Result.Failure<AuthResponse>(UserErrors.DisabledUser);
+
+
+            if (user.LockoutEnd > DateTime.UtcNow)
+                return Result.Failure<AuthResponse>(UserErrors.LockedUser);
+
 
             // 2-  Validate (RefreshToken) :
 
             var userRefreshToken = user.RefreshTokens.SingleOrDefault(r => r.Token == refreshToken && r.IsActive);
+
+
 
             if (userRefreshToken is null)
                 return Result.Failure<AuthResponse>(UserErrors.InvalidRefreshToken);
@@ -144,7 +162,7 @@ namespace SurveyBasket.Services
 
 
         }
-
+        
 
 
         public async Task<Result> RevokeRefreshTokenAsync(string token, string refreshToken, CancellationToken cancellationToken = default)

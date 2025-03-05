@@ -9,6 +9,7 @@ using System.Text;
 using SurveyBasket.Settings;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Hangfire;
+using SurveyBasket.HealthCheck;
 
 namespace SurveyBasket;
 
@@ -65,6 +66,12 @@ public static class DependencyInjection
         services.AddProblemDetails();
         services.AddBackgroundJobsConfig(configuration);
         services.Configure<MailSettings>(configuration.GetSection(nameof(MailSettings)));
+
+        services.AddHealthChecks().AddSqlServer(connectionString, name: "Database")
+            .AddHangfire(option =>
+            {
+                option.MinimumAvailableServers = 1;
+            }).AddCheck<MailProviderHealthCheck>(name: "Mail Service");
 
         return services;
     }

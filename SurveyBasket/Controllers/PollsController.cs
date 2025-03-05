@@ -1,5 +1,7 @@
 ﻿
 
+using Microsoft.AspNetCore.RateLimiting;
+
 namespace SurveyBasket.Controllers;
 
 [Route("api/[controller]")]
@@ -22,6 +24,7 @@ public class PollsController(IPollService pollService) : ControllerBase
 
     [HttpGet("current")]
     [Authorize(Roles = DefaultRoles.Member)]
+    [EnableRateLimiting("UserLimit")]
 
     public async Task<IActionResult> GetCurrent(CancellationToken cancellationToken)
     {

@@ -28,7 +28,7 @@ namespace SurveyBasket.Services
         }        
         
         // this function => gets only available Polls
-        public async Task<Result<IEnumerable<PollResponse>>> GetCurrentAsync(CancellationToken cancellationToken = default)
+        public async Task<Result<IEnumerable<PollResponse>>> GetCurrentAsyncV1(CancellationToken cancellationToken = default)
         {
             var pollResponse = await _context.Polls.Where(p=>p.IsPublished && p.StartsAt <= DateOnly.FromDateTime(DateTime.UtcNow) && p.EndsAt>= DateOnly.FromDateTime(DateTime.UtcNow))
                 .AsNoTracking()
@@ -36,6 +36,17 @@ namespace SurveyBasket.Services
               .ToListAsync(cancellationToken);
 
             return Result.Success<IEnumerable<PollResponse>>(pollResponse);
+
+        }
+
+        public async Task<Result<IEnumerable<PollResponseV2>>> GetCurrentAsyncV2(CancellationToken cancellationToken = default)
+        {
+            var pollResponse = await _context.Polls.Where(p => p.IsPublished && p.StartsAt <= DateOnly.FromDateTime(DateTime.UtcNow) && p.EndsAt >= DateOnly.FromDateTime(DateTime.UtcNow))
+                .AsNoTracking()
+              .ProjectToType<PollResponseV2>()
+              .ToListAsync(cancellationToken);
+
+            return Result.Success<IEnumerable<PollResponseV2>>(pollResponse);
 
         }
 

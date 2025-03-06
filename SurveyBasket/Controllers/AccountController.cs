@@ -1,10 +1,14 @@
-﻿using SurveyBasket.Contracts.Users;
+﻿using Microsoft.AspNetCore.RateLimiting;
+using SurveyBasket.Contracts.Users;
 
 namespace SurveyBasket.Controllers
 {
     [Route("account-info")]
     [ApiController]
     [Authorize]
+
+    [EnableRateLimiting(RateLimiters.Concurrency)]
+
     public class AccountController(IUserService userService) : ControllerBase
     {
         private readonly IUserService _userService = userService;

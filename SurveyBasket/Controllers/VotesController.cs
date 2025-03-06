@@ -1,10 +1,15 @@
 ﻿
 
+using Microsoft.AspNetCore.RateLimiting;
+
 namespace SurveyBasket.Controllers
 {
     [Route("api/polls/{pollId}/vote")]
     [ApiController]
     [Authorize(Roles = DefaultRoles.Member)]
+
+    [EnableRateLimiting(RateLimiters.Concurrency)]
+
     public class VotesController(IQuestionService questionService , IVoteService voteService) : ControllerBase
     {
         private readonly IQuestionService _questionService = questionService;

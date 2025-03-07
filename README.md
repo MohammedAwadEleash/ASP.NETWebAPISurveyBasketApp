@@ -1,0 +1,66 @@
+<img width="1435" alt="untitled-Survey Basket App Mind Map" src="https://github.com/user-attachments/assets/985b1324-2df8-47aa-a246-f0ff39ac94c9" /><img width="1435" alt="untitled-Survey Basket App Mind Map" src="https://github.com/user-attachments/assets/6adb0a75-6655-4865-8c5c-27c11a10cfc2" /># Survey Basket API
+![logo](![Uploading untitled-Survey Basket App Mind Map.png…]()3)
+
+## 📋 Overview
+
+The Survey Basket API is a comprehensive and user-friendly platform for managing surveys, polls, and user responses. It facilitates creating, retrieving, and analyzing polls and questions while ensuring scalability—ideal for developers looking to integrate survey capabilities into their applications.
+
+## ✨ Features
+
+- **🗳️ Poll Management:** Create, update, and delete polls.
+- **❓ Question Management:** Add, edit, and organize questions in polls.
+- **📝 User Responses:** Record and retrieve user votes and responses.
+- **📊 Results Analysis:** Aggregate and display poll results.
+- **🔔 Real-Time Notifications:** Sends notifications when new polls are added.
+
+## 🚀 Key Highlights
+
+- **🔒 User & Role Management:**  
+  Utilizes JWT for robust authentication and authorization, ensuring smooth and secure access control.
+
+- **📈 Polls & Surveys:**  
+  Empowers users to effortlessly create, manage, and participate in polls, streamlining data collection and engagement.
+
+- **📝 Audit Logging:**  
+  Implements audit logs to track resource changes, ensuring transparency and accountability.
+
+- **⚠️ Centralized Exception Handling:**  
+  Provides unified error management to handle exceptions gracefully, significantly enhancing the user experience.
+
+- **🛠️ Structured Error Handling:**  
+  Adopts the result pattern to deliver clear, actionable feedback for error management.
+
+- **🔄 Automapper/Mapster Integration:**  
+  Employs efficient object mapping between models to improve data handling and reduce boilerplate code.
+
+- **✅ Fluent Validation:**  
+  Ensures data integrity by rigorously validating inputs, resulting in user-friendly error messages.
+
+- **🔑 Account Management:**  
+  Offers robust features for user account control, including functionalities for password changes and resets.
+
+- **⏱️ Rate Limiting:**  
+  Manages request rates to prevent misuse, ensuring equitable resource access for all users.
+
+- **🔧 Background Jobs:**  
+  Leverages Hangfire to manage background tasks such as sending confirmation emails and processing password resets seamlessly.
+
+- **💓 Health Checks:**  
+  Integrates system health checks to monitor performance and maintain high uptime and reliability.
+
+- **🗃️ Distributed Caching:**  
+  Optimizes performance by caching frequently accessed data, significantly boosting response times.
+
+- **✉️ Email Confirmation:**  
+  Streamlines processes for user email verification, password modifications, and resets to further strengthen security.
+
+- **📌 API Versioning:**  
+  Supports multiple API versions to maintain backward compatibility and ease the transition as the project evolves.
+
+## 🔧 Getting Started
+
+To set up the project locally:
+
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/yourusername/SurveyBasket.git

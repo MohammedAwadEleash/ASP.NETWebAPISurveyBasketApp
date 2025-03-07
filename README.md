@@ -7,6 +7,18 @@
 
 The Survey Basket API is a comprehensive and user-friendly platform for managing surveys, polls, and user responses. It facilitates creating, retrieving, and analyzing polls and questions while ensuring scalability—ideal for developers looking to integrate survey capabilities into their applications.
 
+## 🛠 Tech Stack
+
+- **Backend Framework:** ASP.NET Core 8.0
+- **ORM:** Entity Framework Core
+- **Database:** SQL Server
+- ✅ **SOLID Principles:** some of SOLID Principles  such as the single responsibility principle , Dependency Inversion Principle
+- ✅ **Architectural Principles:** Dependency Injection (DI)
+- **Authentication & Authorization:** ASP.NET Core Identity
+- **Logging:** Serilog (used for logging errors and exceptions)
+
+- **SOLID Principles:** Incorporates principles such as Single Responsibility and Dependency Inversion
+- **Architectural Principles:** Dependency Injection (DI)
 ## ✨ Features
 
 - **🗳️ Poll Management:** Create, update, and delete polls.

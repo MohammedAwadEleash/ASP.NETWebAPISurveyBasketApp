@@ -1,4 +1,6 @@
-<img width="1435" alt="untitled-Survey Basket App Mind Map" src="https://github.com/user-attachments/assets/985b1324-2df8-47aa-a246-f0ff39ac94c9" /><img width="1435" alt="untitled-Survey Basket App Mind Map" src="https://github.com/user-attachments/assets/6adb0a75-6655-4865-8c5c-27c11a10cfc2" /># Survey Basket API
+# Survey Basket API
+
+
 ![logo](![Uploading untitled-Survey Basket App Mind Map.png…]()3)
 
 ## 📋 Overview
@@ -63,4 +65,4 @@ To set up the project locally:
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/yourusername/SurveyBasket.git
+   git clone [https://github.com/yourusername/SurveyBasket.git](https://github.com/MohammedAwadEleash/ASP.NETWebAPISurveyBasketApp/tree/main)

@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace SurveyBasket.Entities
+﻿namespace SurveyBasket.Entities
 {
-    public class ApplicationRole:IdentityRole
+    public class ApplicationRole : IdentityRole
     {
 
         public bool IsDefault { get; set; }

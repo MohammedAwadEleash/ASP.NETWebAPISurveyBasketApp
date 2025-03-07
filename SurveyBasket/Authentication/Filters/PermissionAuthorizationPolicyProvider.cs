@@ -23,5 +23,4 @@ namespace SurveyBasket.Authentication.Filters
             return permissionPolicy;
         }
     }
-    }
-    
+}

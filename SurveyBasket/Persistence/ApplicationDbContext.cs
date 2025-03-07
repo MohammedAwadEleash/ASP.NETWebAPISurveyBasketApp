@@ -3,16 +3,16 @@
 using System.Reflection;
 namespace SurveyBasket.Persistence
 {
-    public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options,IHttpContextAccessor httpContextAccessor) 
-        : IdentityDbContext<ApplicationUser, ApplicationRole, string >(options)
+    public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options, IHttpContextAccessor httpContextAccessor)
+        : IdentityDbContext<ApplicationUser, ApplicationRole, string>(options)
     {
         private readonly IHttpContextAccessor _httpContextAccessor = httpContextAccessor;
 
-        public   DbSet<Poll> Polls { set; get; }
-        public   DbSet<Answer> Answers { set; get; }
-        public   DbSet<Question> Questions { set; get; }
-        public   DbSet<Vote> Votes { set; get; }
-        public   DbSet<VoteAnswer> VoteAnswers { set; get; }
+        public DbSet<Poll> Polls { set; get; }
+        public DbSet<Answer> Answers { set; get; }
+        public DbSet<Question> Questions { set; get; }
+        public DbSet<Vote> Votes { set; get; }
+        public DbSet<VoteAnswer> VoteAnswers { set; get; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -1,8 +1,4 @@
-﻿
-
-using SurveyBasket.Contracts.Users;
-
-namespace SurveyBasket.Controllers
+﻿namespace SurveyBasket.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -36,8 +32,8 @@ namespace SurveyBasket.Controllers
 
         public async Task<IActionResult> Add([FromBody] CreateUserRequest request, CancellationToken cancellationToken)
         {
-            var result = await _userService.AddAsync(request,cancellationToken);
-            return result.IsSuccess ? CreatedAtAction(nameof(Get), new {result.Value.Id}, result.Value) : result.ToProblem();
+            var result = await _userService.AddAsync(request, cancellationToken);
+            return result.IsSuccess ? CreatedAtAction(nameof(Get), new { result.Value.Id }, result.Value) : result.ToProblem();
 
 
         }
@@ -48,7 +44,7 @@ namespace SurveyBasket.Controllers
 
         public async Task<IActionResult> Update([FromRoute] string id, [FromBody] UpdateUserRequest request, CancellationToken cancellationToken)
         {
-            var result = await _userService.UpdateAsync(id,request, cancellationToken);
+            var result = await _userService.UpdateAsync(id, request, cancellationToken);
             return result.IsSuccess ? NoContent() : result.ToProblem();
 
 

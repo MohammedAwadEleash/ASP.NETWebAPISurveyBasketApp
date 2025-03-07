@@ -2,7 +2,7 @@
 {
     public record VotesPerQuestionResponse
     (
-        string Question, 
+        string Question,
         IEnumerable<VotesPerAnswerResponse> SelectedAnswers
         );
 }

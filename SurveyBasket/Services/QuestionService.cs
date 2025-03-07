@@ -1,7 +1,5 @@
 ﻿using Microsoft.Extensions.Caching.Hybrid;
 using System.Linq.Dynamic.Core;
-using SurveyBasket.Contracts.Common;
-using SurveyBasket.Contracts.Questions;
 
 namespace SurveyBasket.Services
 {
@@ -26,9 +24,9 @@ namespace SurveyBasket.Services
 
 
             var query = _context.Questions
-                .Where(q => q.PollId == pollId );
+                .Where(q => q.PollId == pollId);
 
-            if(!string.IsNullOrEmpty(filters.SearchValue))
+            if (!string.IsNullOrEmpty(filters.SearchValue))
             {
 
                 query = query.Where(q => q.Content.Contains(filters.SearchValue));
@@ -42,19 +40,19 @@ namespace SurveyBasket.Services
                 query = query.OrderBy($"{filters.SortColumn} {filters.SortDirection}");
             }
 
-                var source = query.Include(q => q.Answers)
-                //.Select(q=> new QuestionResponse(
+            var source = query.Include(q => q.Answers)
+            //.Select(q=> new QuestionResponse(
 
-                //    q.Id,
-                //    q.Content,
-                //    q.Answers.Select(answer=> new AnswerResponse(answer.Id,answer.Content))
+            //    q.Id,
+            //    q.Content,
+            //    q.Answers.Select(answer=> new AnswerResponse(answer.Id,answer.Content))
 
-                //))
-                .ProjectToType<QuestionResponse>()
-                .AsNoTracking();
+            //))
+            .ProjectToType<QuestionResponse>()
+            .AsNoTracking();
 
 
-        var questionResponse = await     PaginatedList<QuestionResponse>.CreateAsync(source, filters.PageNumber, filters.PageSize, cancellationToken);
+            var questionResponse = await PaginatedList<QuestionResponse>.CreateAsync(source, filters.PageNumber, filters.PageSize, cancellationToken);
 
 
             return Result.Success(questionResponse);
@@ -62,7 +60,7 @@ namespace SurveyBasket.Services
 
 
         // this function => gets available Questions and Answers
-       public async  Task<Result<IEnumerable<QuestionResponse>>> GetAvailableAsync(int pollId, string userId, CancellationToken cancellationToken = default)
+        public async Task<Result<IEnumerable<QuestionResponse>>> GetAvailableAsync(int pollId, string userId, CancellationToken cancellationToken = default)
         {
             //var hasVote = await _context.Votes.AnyAsync(x => x.PollId == pollId && x.UserId == userId, cancellationToken);
 
@@ -99,11 +97,11 @@ namespace SurveyBasket.Services
         {
 
 
-            var questionResponse = await _context.Questions.Where(q => q.PollId == pollId && q.Id ==id )
+            var questionResponse = await _context.Questions.Where(q => q.PollId == pollId && q.Id == id)
                 .Include(q => q.Answers)
                 .ProjectToType<QuestionResponse>()
                 .AsNoTracking()
-               . SingleOrDefaultAsync(cancellationToken);
+               .SingleOrDefaultAsync(cancellationToken);
 
 
             if (questionResponse is null)
@@ -119,13 +117,13 @@ namespace SurveyBasket.Services
         public async Task<Result<QuestionResponse>> AddAsync(int pollId, QuestionRequest request, CancellationToken cancellationToken = default)
         {
 
-            
+
             var pollIsExists = await _context.Polls.AnyAsync(p => p.Id == pollId, cancellationToken: cancellationToken);
 
             if (!pollIsExists)
                 return Result.Failure<QuestionResponse>(PollErrors.PollNotFound);
 
-        var questionIsExists = await _context.Questions.AnyAsync(q => q.PollId == pollId && q.Content == request.Content, cancellationToken: cancellationToken);
+            var questionIsExists = await _context.Questions.AnyAsync(q => q.PollId == pollId && q.Content == request.Content, cancellationToken: cancellationToken);
 
 
             if (questionIsExists)
@@ -155,17 +153,17 @@ namespace SurveyBasket.Services
         public async Task<Result> UpdateAsync(int pollId, int id, QuestionRequest request, CancellationToken cancellationToken = default)
         {
 
-          
+
             var questionIsExists = await _context.Questions
-                .AnyAsync(q => q.PollId == pollId && q.Id != id && q.Content == request.Content 
-                ,  cancellationToken);
+                .AnyAsync(q => q.PollId == pollId && q.Id != id && q.Content == request.Content
+                , cancellationToken);
 
 
             if (questionIsExists)
                 return Result.Failure<QuestionResponse>(QuestionErrors.DuplicatedQuestionContent);
 
-            var question = await  _context.Questions.Include(q => q.Answers).SingleOrDefaultAsync(q => q.PollId == pollId && q.Id == id, cancellationToken);
-            if(question is null)
+            var question = await _context.Questions.Include(q => q.Answers).SingleOrDefaultAsync(q => q.PollId == pollId && q.Id == id, cancellationToken);
+            if (question is null)
                 return Result.Failure<QuestionResponse>(QuestionErrors.QuestionNotFound);
 
             question.Content = request.Content;
@@ -198,7 +196,7 @@ namespace SurveyBasket.Services
 
 
         }
-        public async  Task<Result> ToggleStatusAsync(int pollId, int id, CancellationToken cancellationToken = default)
+        public async Task<Result> ToggleStatusAsync(int pollId, int id, CancellationToken cancellationToken = default)
         {
             var question = await _context.Questions.SingleOrDefaultAsync(q => q.PollId == pollId && q.Id == id, cancellationToken);
 
@@ -214,6 +212,6 @@ namespace SurveyBasket.Services
             return Result.Success();
         }
 
-     
+
     }
 }

@@ -1,22 +1,15 @@
-﻿using FluentValidation.AspNetCore;
-using MapsterMapper;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
-using SurveyBasket.Authentication;
-using System.Reflection;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using SurveyBasket.Settings;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Hangfire;
-using SurveyBasket.HealthCheck;
-using Microsoft.AspNetCore.RateLimiting;
-using Microsoft.Extensions.Options;
-using System.Threading.RateLimiting;
-using Asp.Versioning;
-
-using SurveyBasket.OpenApiTransformers;
+﻿using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
+using FluentValidation.AspNetCore;
+using MapsterMapper;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.IdentityModel.Tokens;
+using SurveyBasket.Authentication;
+using SurveyBasket.OpenApiTransformers;
+using SurveyBasket.Settings;
+using System.Reflection;
+using System.Text;
+using System.Threading.RateLimiting;
 
 namespace SurveyBasket;
 
@@ -29,16 +22,16 @@ public static class DependencyInjection
 
         services.AddHybridCache();
 
+        // Apply Cors 
+        services.AddCors(options =>
+            options.AddDefaultPolicy(builder =>
+                builder
+                    .AllowAnyMethod()
+                    .AllowAnyHeader()
+                    .WithOrigins(configuration.GetSection("AllowedOrigins").Get<string[]>()!)
+            )
 
-        //services.AddCors(options =>
-        //    options.AddDefaultPolicy(builder =>
-        //        builder
-        //            .AllowAnyMethod()
-        //            .AllowAnyHeader()
-        //            .WithOrigins(configuration.GetSection("AllowedOrigins").Get<string[]>()!)
-        //    )
-
-        //);
+        );
 
 
         services.AddAuthConfig(configuration);
@@ -72,7 +65,10 @@ public static class DependencyInjection
         services.AddExceptionHandler<GlobalExceptionHandeler>();
         services.AddProblemDetails();
         services.AddBackgroundJobsConfig(configuration);
-        services.Configure<MailSettings>(configuration.GetSection(nameof(MailSettings)));
+
+
+        services.AddOptions<MailSettings>().BindConfiguration(nameof(MailSettings)).ValidateDataAnnotations().ValidateOnStart();
+
 
         services.AddHealthChecks().AddSqlServer(connectionString, name: "Database")
             .AddHangfire(option =>
@@ -90,14 +86,14 @@ public static class DependencyInjection
             options.DefaultApiVersion = new ApiVersion(1.0);
             options.AssumeDefaultVersionWhenUnspecified = true;
             options.ReportApiVersions = true;
-            options.ApiVersionReader = new HeaderApiVersionReader("x-api-version") ;
-            
+            options.ApiVersionReader = new HeaderApiVersionReader("x-api-version");
+
         }
 
 
             ).AddApiExplorer(options =>
             {
-               
+
                 options.GroupNameFormat = "'v'V";
                 options.SubstituteApiVersionInUrl = true;
 
@@ -116,7 +112,7 @@ public static class DependencyInjection
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
-      
+
 
         return services;
     }
@@ -132,12 +128,12 @@ public static class DependencyInjection
             {
                 options.AddDocumentTransformer<BearerSecuritySchemeTransformer>();
                 options.AddDocumentTransformer(new ApiVersioningTransformer(description));
-               
 
 
-                });
 
-            
+            });
+
+
         }
 
 
@@ -205,14 +201,15 @@ public static class DependencyInjection
             };
         });
 
-        services.Configure<IdentityOptions>(options => {
+        services.Configure<IdentityOptions>(options =>
+        {
 
             options.Password.RequiredLength = 8;
             options.SignIn.RequireConfirmedEmail = true;
             options.User.RequireUniqueEmail = true;
-            
-            
-                     
+
+
+
         });
 
 

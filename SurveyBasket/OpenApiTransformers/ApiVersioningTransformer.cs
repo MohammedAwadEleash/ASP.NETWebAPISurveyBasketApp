@@ -1,6 +1,5 @@
 ﻿using Asp.Versioning.ApiExplorer;
 using Microsoft.AspNetCore.OpenApi;
-using Microsoft.Identity.Client;
 using Microsoft.OpenApi.Models;
 
 namespace SurveyBasket.OpenApiTransformers;
@@ -11,7 +10,7 @@ public sealed class ApiVersioningTransformer(ApiVersionDescription description) 
     public Task TransformAsync(OpenApiDocument document, OpenApiDocumentTransformerContext context, CancellationToken cancellationToken)
     {
 
-       
+
         document.Info = new()
         {
 

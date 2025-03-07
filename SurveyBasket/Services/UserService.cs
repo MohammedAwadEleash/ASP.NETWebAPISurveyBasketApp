@@ -1,10 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Localization;
-using SurveyBasket.Contracts.Users;
-
-namespace SurveyBasket.Services
+﻿namespace SurveyBasket.Services
 {
-    public class UserService(UserManager<ApplicationUser> userManager, ApplicationDbContext context, IRoleService roleService ): IUserService
+    public class UserService(UserManager<ApplicationUser> userManager, ApplicationDbContext context, IRoleService roleService) : IUserService
     {
         private readonly UserManager<ApplicationUser> _userManager = userManager;
         private readonly ApplicationDbContext _context = context;
@@ -25,12 +21,12 @@ namespace SurveyBasket.Services
                        u.LastName,
                        u.Email,
                        u.IsDisabled,
-                     Roles=  roles.Select(r => r.Name)
-                       }
+                       Roles = roles.Select(r => r.Name)
+                   }
 
                    ).GroupBy(u => new { u.Id, u.FirstName, u.LastName, u.Email, u.IsDisabled })
 
-            
+
             .Select(g => new UserResponse(
 
                            g.Key.Id,
@@ -38,10 +34,10 @@ namespace SurveyBasket.Services
                            g.Key.LastName,
                            g.Key.Email,
                            g.Key.IsDisabled,
-                            g.SelectMany(g=>g.Roles)
+                            g.SelectMany(g => g.Roles)
 
                                       ))
-            
+
             .ToListAsync(cancellationToken);
 
 
@@ -52,7 +48,7 @@ namespace SurveyBasket.Services
 
         {
 
-            var user =await  _userManager.FindByIdAsync(id);
+            var user = await _userManager.FindByIdAsync(id);
             if (user is null)
                 return Result.Failure<UserResponse>(UserErrors.UserNotFound);
 
@@ -61,28 +57,28 @@ namespace SurveyBasket.Services
             var response = (user, userRoles).Adapt<UserResponse>();
 
             return Result.Success(response);
-                    
-                    }
+
+        }
 
 
 
 
 
-        public async Task<Result<UserResponse>> AddAsync(CreateUserRequest request , CancellationToken  cancellationToken = default)
+        public async Task<Result<UserResponse>> AddAsync(CreateUserRequest request, CancellationToken cancellationToken = default)
         {
 
 
             var emailIsExists = await _userManager.Users.AnyAsync(u => u.Email == request.Email, cancellationToken);
-            if(emailIsExists)
+            if (emailIsExists)
                 return Result.Failure<UserResponse>(UserErrors.DuplicatedEmail);
 
 
             //    var allowedRoles = _context.Roles.Select(r => r.Name);
 
-            var allowedRoles = await _roleService.GetAllAsync(cancellationToken:cancellationToken);
+            var allowedRoles = await _roleService.GetAllAsync(cancellationToken: cancellationToken);
 
-            if(request.Roles.Except(allowedRoles.Select(r=>r.Name)).Any())
-             return Result.Failure<UserResponse>(UserErrors.InvalidRoles);
+            if (request.Roles.Except(allowedRoles.Select(r => r.Name)).Any())
+                return Result.Failure<UserResponse>(UserErrors.InvalidRoles);
 
 
             var user = request.Adapt<ApplicationUser>();
@@ -91,9 +87,9 @@ namespace SurveyBasket.Services
             var result = await _userManager.CreateAsync(user, request.Password);
 
 
-            if(result.Succeeded)
+            if (result.Succeeded)
             {
-                await _userManager.AddToRolesAsync(user,request.Roles);
+                await _userManager.AddToRolesAsync(user, request.Roles);
 
 
 
@@ -117,17 +113,17 @@ namespace SurveyBasket.Services
 
 
 
-        public async Task<Result> UpdateAsync(string id ,UpdateUserRequest request, CancellationToken cancellationToken = default)
+        public async Task<Result> UpdateAsync(string id, UpdateUserRequest request, CancellationToken cancellationToken = default)
         {
 
 
             var user = await _userManager.FindByIdAsync(id);
 
-            if(user is null)
+            if (user is null)
                 return Result.Failure(UserErrors.UserNotFound);
 
 
-            var emailIsExists = await _userManager.Users.AnyAsync(u => u.Email == request.Email && u.Id !=id, cancellationToken);
+            var emailIsExists = await _userManager.Users.AnyAsync(u => u.Email == request.Email && u.Id != id, cancellationToken);
             if (emailIsExists)
                 return Result.Failure(UserErrors.DuplicatedEmail);
 
@@ -140,8 +136,8 @@ namespace SurveyBasket.Services
                 return Result.Failure(UserErrors.InvalidRoles);
 
 
-            
-             user = request.Adapt(user);
+
+            user = request.Adapt(user);
 
 
             var result = await _userManager.UpdateAsync(user);
@@ -150,9 +146,9 @@ namespace SurveyBasket.Services
             if (result.Succeeded)
             {
 
-             
 
-                await _context.UserRoles.Where(r=>r.UserId ==id)
+
+                await _context.UserRoles.Where(r => r.UserId == id)
                     .ExecuteDeleteAsync(cancellationToken);
 
 
@@ -164,7 +160,7 @@ namespace SurveyBasket.Services
             }
 
 
-    
+
 
 
             var error = result.Errors.First();
@@ -187,13 +183,13 @@ namespace SurveyBasket.Services
                 return Result.Failure(UserErrors.UserNotFound);
 
 
-             user.IsDisabled = !user.IsDisabled;
+            user.IsDisabled = !user.IsDisabled;
 
             await _userManager.UpdateAsync(user);
 
             return Result.Success();
 
-          
+
         }
 
 
@@ -217,7 +213,7 @@ namespace SurveyBasket.Services
 
 
         public async Task<Result<UserProfileResponse>> GetProfileAsync(string userId)
-           {
+        {
 
             var user = await _userManager.Users.Where(u => u.Id == userId)
                 .ProjectToType<UserProfileResponse>().SingleAsync();
@@ -227,7 +223,7 @@ namespace SurveyBasket.Services
         }
 
 
-        public async Task<Result> UpdateProfileAsync(string userId , UpdateProfileRequest request)
+        public async Task<Result> UpdateProfileAsync(string userId, UpdateProfileRequest request)
         {
 
             //var user  = await _userManager.FindByIdAsync(userId);
@@ -259,13 +255,13 @@ namespace SurveyBasket.Services
         }
 
 
-        public async Task<Result>ChangePasswordAsync(string userId, ChangePasswordRequest request)
+        public async Task<Result> ChangePasswordAsync(string userId, ChangePasswordRequest request)
         {
             var user = await _userManager.FindByIdAsync(userId);
 
-        
 
-           var result =  await _userManager.ChangePasswordAsync(user!, request.CurrentPassword, request.NewPassword);
+
+            var result = await _userManager.ChangePasswordAsync(user!, request.CurrentPassword, request.NewPassword);
 
 
             if (result.Succeeded)

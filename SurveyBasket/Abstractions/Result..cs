@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Components.Web;
-
-namespace SurveyBasket.Abstractions
+﻿namespace SurveyBasket.Abstractions
 {
     public class Result
     {
@@ -16,18 +14,18 @@ namespace SurveyBasket.Abstractions
         }
         public bool IsSuccess { get; }
         public bool IsFailure => !IsSuccess;
-        
+
         public Error Error { get; } = default!;
 
         public static Result Success() => new(true, Error.None);
         public static Result Failure(Error error) => new(false, error);
 
 
-        public static Result<TValue> Success<TValue>(TValue value) => new(value,true, Error.None);
-        public static Result<TValue> Failure<TValue>(Error error) => new(default,false, error);
+        public static Result<TValue> Success<TValue>(TValue value) => new(value, true, Error.None);
+        public static Result<TValue> Failure<TValue>(Error error) => new(default, false, error);
     }
 
-    public class Result <TValue> : Result
+    public class Result<TValue> : Result
     {
 
         private readonly TValue? _value;
@@ -36,9 +34,8 @@ namespace SurveyBasket.Abstractions
         {
             _value = value;
         }
-     public TValue Value =>IsSuccess ? _value! : throw new InvalidOperationException("Failure result cannot have value");
+        public TValue Value => IsSuccess ? _value! : throw new InvalidOperationException("Failure result cannot have value");
 
     }
 }
- 
- 
+

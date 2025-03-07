@@ -1,6 +1,6 @@
 ﻿namespace SurveyBasket.Contracts
 {
-    public record  VotesPerDayResponse(DateOnly Date , int NumberOfVotes);
-    
-    
+    public record VotesPerDayResponse(DateOnly Date, int NumberOfVotes);
+
+
 }

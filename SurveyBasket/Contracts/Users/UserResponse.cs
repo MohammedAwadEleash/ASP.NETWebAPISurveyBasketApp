@@ -1,7 +1,7 @@
 ﻿namespace SurveyBasket.Contracts.Users
 {
-    public record  UserResponse(
-        string Id , 
+    public record UserResponse(
+        string Id,
         string FirstName,
         string LastName,
         string Email,
@@ -9,8 +9,8 @@
         IEnumerable<string> Roles
 
 
-        
-        
+
+
         );
-    
+
 }

@@ -1,11 +1,9 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace SurveyBasket.Abstractions
+﻿namespace SurveyBasket.Abstractions
 {
     public static class ResultExtensions
     {
 
-        public static ObjectResult ToProblem(this Result result )
+        public static ObjectResult ToProblem(this Result result)
         {
             if (result.IsSuccess)
                 throw new InvalidOperationException("Cannot convert success result to a problem");

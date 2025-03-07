@@ -1,10 +1,4 @@
 ﻿
-using Azure.Core;
-using Hangfire;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Threading;
-
 namespace SurveyBasket.Services
 {
 
@@ -25,12 +19,12 @@ namespace SurveyBasket.Services
             return Result.Success<IEnumerable<PollResponse>>(pollResponse);
 
 
-        }        
-        
+        }
+
         // this function => gets only available Polls
         public async Task<Result<IEnumerable<PollResponse>>> GetCurrentAsyncV1(CancellationToken cancellationToken = default)
         {
-            var pollResponse = await _context.Polls.Where(p=>p.IsPublished && p.StartsAt <= DateOnly.FromDateTime(DateTime.UtcNow) && p.EndsAt>= DateOnly.FromDateTime(DateTime.UtcNow))
+            var pollResponse = await _context.Polls.Where(p => p.IsPublished && p.StartsAt <= DateOnly.FromDateTime(DateTime.UtcNow) && p.EndsAt >= DateOnly.FromDateTime(DateTime.UtcNow))
                 .AsNoTracking()
               .ProjectToType<PollResponse>()
               .ToListAsync(cancellationToken);
@@ -50,10 +44,10 @@ namespace SurveyBasket.Services
 
         }
 
-        public async  Task<Result<PollResponse>> GetAsync(int id, CancellationToken cancellationToken = default)
+        public async Task<Result<PollResponse>> GetAsync(int id, CancellationToken cancellationToken = default)
 
         {
-           var poll=  await _context.Polls.FindAsync(id, cancellationToken);
+            var poll = await _context.Polls.FindAsync(id, cancellationToken);
             if (poll is null)
                 return Result.Failure<PollResponse>(PollErrors.PollNotFound);
 
@@ -65,7 +59,7 @@ namespace SurveyBasket.Services
 
             var isExistingTitle = await _context.Polls.AnyAsync(p => p.Title == request.Title, cancellationToken: cancellationToken);
 
-            if(isExistingTitle)
+            if (isExistingTitle)
                 return Result.Failure<PollResponse>(PollErrors.DuplicatedPollTitle);
 
             var poll = request.Adapt<Poll>();
@@ -93,31 +87,27 @@ namespace SurveyBasket.Services
                 return Result.Failure(PollErrors.PollNotFound);
 
 
-
-            currentPoll.Title = request.Title;
-            currentPoll.Summary = request.Summary;
-            currentPoll.StartsAt = request.StartsAt;
-            currentPoll.EndsAt = request.EndsAt;
+            currentPoll = request.Adapt(currentPoll);
 
             await _context.SaveChangesAsync(cancellationToken);
 
             return Result.Success();
 
         }
-        public async Task<Result> DeleteAsync(int id,CancellationToken cancellationToken=default)
-        
-            {
-              var poll = await _context.Polls.FindAsync(id, cancellationToken);
+        public async Task<Result> DeleteAsync(int id, CancellationToken cancellationToken = default)
 
-                if (poll is null)
-                    return Result.Failure(PollErrors.PollNotFound);
+        {
+            var poll = await _context.Polls.FindAsync(id, cancellationToken);
+
+            if (poll is null)
+                return Result.Failure(PollErrors.PollNotFound);
 
             _context.Remove(poll);
             await _context.SaveChangesAsync(cancellationToken);
             return Result.Success();
 
         }
-        public async Task<Result> TogglePublishStatusAsync(int id, CancellationToken cancellationToken =default)
+        public async Task<Result> TogglePublishStatusAsync(int id, CancellationToken cancellationToken = default)
         {
 
             var poll = await _context.Polls.FindAsync(id, cancellationToken);
@@ -130,7 +120,7 @@ namespace SurveyBasket.Services
             await _context.SaveChangesAsync(cancellationToken);
 
             if (poll.IsPublished && poll.StartsAt == DateOnly.FromDateTime(DateTime.UtcNow))
-                BackgroundJob.Enqueue(()=>_notificationService.SendNewPollsNotification(id));
+                BackgroundJob.Enqueue(() => _notificationService.SendNewPollsNotification(id));
 
 
             return Result.Success();

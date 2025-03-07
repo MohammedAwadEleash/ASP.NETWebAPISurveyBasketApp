@@ -1,5 +1,4 @@
-﻿using Hangfire;
-using MailKit.Net.Smtp;
+﻿using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using SurveyBasket.Settings;

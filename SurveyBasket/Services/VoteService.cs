@@ -1,14 +1,10 @@
-﻿
-using Microsoft.EntityFrameworkCore;
-using SurveyBasket.Contracts.Questions;
-
-namespace SurveyBasket.Services
+﻿namespace SurveyBasket.Services
 {
     public class VoteService(ApplicationDbContext context) : IVoteService
     {
         private readonly ApplicationDbContext _context = context;
 
-        public  async Task<Result> AddAsync(int pollId, string userId, VoteRequest request, CancellationToken cancellationToken = default)
+        public async Task<Result> AddAsync(int pollId, string userId, VoteRequest request, CancellationToken cancellationToken = default)
         {
             var hasVote = await _context.Votes.AnyAsync(v => v.PollId == pollId && v.UserId == userId, cancellationToken);
 
@@ -26,8 +22,8 @@ namespace SurveyBasket.Services
             var availableQuestions = await _context.Questions.Where(q => q.PollId == pollId && q.IsActive)
                 .Select(q => q.Id).ToListAsync(cancellationToken);
 
-            if (!request.Answers.Select(x=>x.QuestionId).SequenceEqual(availableQuestions))
-                  return Result.Failure(VoteErrors.InvalidQuestions);
+            if (!request.Answers.Select(x => x.QuestionId).SequenceEqual(availableQuestions))
+                return Result.Failure(VoteErrors.InvalidQuestions);
 
 
             var vote = new Vote
@@ -41,7 +37,7 @@ namespace SurveyBasket.Services
 
             };
 
-            await  _context.Votes.AddAsync(vote, cancellationToken);
+            await _context.Votes.AddAsync(vote, cancellationToken);
             await _context.SaveChangesAsync(cancellationToken);
 
             return Result.Success();

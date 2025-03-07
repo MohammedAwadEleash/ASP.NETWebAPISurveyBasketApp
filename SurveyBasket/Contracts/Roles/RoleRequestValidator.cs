@@ -1,6 +1,6 @@
 ﻿namespace SurveyBasket.Contracts.Roles
 {
-    public class  RoleRequestValidator : AbstractValidator<RoleRequest>
+    public class RoleRequestValidator : AbstractValidator<RoleRequest>
     {
         public RoleRequestValidator()
         {

@@ -1,8 +1,4 @@
-﻿
-using SurveyBasket.Contracts.Common;
-using SurveyBasket.Contracts.Questions;
-
-namespace SurveyBasket.Controllers
+﻿namespace SurveyBasket.Controllers
 {
     [Route("api/polls/{pollId}/[controller]")]
     [ApiController]
@@ -12,7 +8,7 @@ namespace SurveyBasket.Controllers
 
         [HttpGet("")]
         [HasPermission(Permissions.GetQuestions)]
-        public async Task<IActionResult> GetAll([FromRoute] int pollId, [FromQuery] RequestFilters filters ,CancellationToken cancellationToken)
+        public async Task<IActionResult> GetAll([FromRoute] int pollId, [FromQuery] RequestFilters filters, CancellationToken cancellationToken)
         {
             var result = await _questionService.GetAllAsync(pollId, filters, cancellationToken);
 
@@ -25,11 +21,11 @@ namespace SurveyBasket.Controllers
         [HttpGet("{id}")]
         [HasPermission(Permissions.GetQuestions)]
 
-        public async Task<IActionResult> Get([FromRoute] int pollId, [FromRoute] int id ,CancellationToken cancellationToken)
+        public async Task<IActionResult> Get([FromRoute] int pollId, [FromRoute] int id, CancellationToken cancellationToken)
         {
 
 
-            var result = await _questionService.GetAsync(pollId,id ,cancellationToken);
+            var result = await _questionService.GetAsync(pollId, id, cancellationToken);
 
             return result.IsSuccess ? Ok(result.Value) : result.ToProblem();
 
@@ -39,7 +35,7 @@ namespace SurveyBasket.Controllers
         [HttpPost("")]
         [HasPermission(Permissions.AddQuestions)]
 
-        public async Task<IActionResult>Add([FromRoute] int pollId, [FromBody] QuestionRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> Add([FromRoute] int pollId, [FromBody] QuestionRequest request, CancellationToken cancellationToken)
         {
 
 
@@ -53,10 +49,10 @@ namespace SurveyBasket.Controllers
         [HttpPut("{Id}")]
         [HasPermission(Permissions.UpdateQuestions)]
 
-        public async Task<IActionResult> Update([FromRoute] int pollId, [FromRoute] int id,[FromBody] QuestionRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> Update([FromRoute] int pollId, [FromRoute] int id, [FromBody] QuestionRequest request, CancellationToken cancellationToken)
         {
 
-            var result = await _questionService.UpdateAsync(pollId, id,request, cancellationToken);
+            var result = await _questionService.UpdateAsync(pollId, id, request, cancellationToken);
 
             return result.IsSuccess
           ? NoContent()
@@ -68,12 +64,12 @@ namespace SurveyBasket.Controllers
 
         public async Task<IActionResult> ToggleStatus([FromRoute] int pollId, [FromRoute] int id, CancellationToken cancellationToken)
         {
-            var result = await _questionService.ToggleStatusAsync(pollId,id, cancellationToken);
+            var result = await _questionService.ToggleStatusAsync(pollId, id, cancellationToken);
 
             return result.IsSuccess ? NoContent() : result.ToProblem();
 
         }
 
     }
-    }
+}
 

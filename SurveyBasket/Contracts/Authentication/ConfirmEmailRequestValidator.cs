@@ -1,7 +1,7 @@
 ﻿
 namespace SurveyBasket.Contracts.Authentication
 {
-    public class ConfirmEmailRequestValidator: AbstractValidator<ConfirmEmailRequest>
+    public class ConfirmEmailRequestValidator : AbstractValidator<ConfirmEmailRequest>
     {
         public ConfirmEmailRequestValidator()
         {
@@ -10,7 +10,7 @@ namespace SurveyBasket.Contracts.Authentication
 
             RuleFor(c => c.Code)
                 .NotEmpty();
-               
+
         }
     }
 }

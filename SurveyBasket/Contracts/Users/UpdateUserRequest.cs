@@ -1,6 +1,6 @@
 ﻿namespace SurveyBasket.Contracts.Users
 {
-    public record   UpdateUserRequest(
+    public record UpdateUserRequest(
 
         string FirstName,
         string LastName,
@@ -8,5 +8,5 @@
         IList<string> Roles
 
         );
-    
+
 }

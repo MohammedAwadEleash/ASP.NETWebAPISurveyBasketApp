@@ -9,6 +9,6 @@
 
             RuleForEach(v => v.Answers)
           .SetInheritanceValidator(va => va.Add(new VoteAnswerRequestValidator()));
-        } 
+        }
     }
 }

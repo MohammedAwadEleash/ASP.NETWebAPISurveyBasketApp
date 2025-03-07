@@ -4,10 +4,10 @@
     {
         public ResendConfirmationEmailRequestValidator()
         {
-            RuleFor(r => r.Email) .NotEmpty().EmailAddress();
+            RuleFor(r => r.Email).NotEmpty().EmailAddress();
 
 
         }
     }
-    
+
 }

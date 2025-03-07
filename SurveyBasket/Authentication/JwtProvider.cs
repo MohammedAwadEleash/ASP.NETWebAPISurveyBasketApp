@@ -9,8 +9,8 @@ namespace SurveyBasket.Authentication
     public class JwtProvider(IOptions<JwtOptions> jwtOptions) : IJwtProvider
     {
         private readonly JwtOptions _jwtOptions = jwtOptions.Value;
-        
-        public (string token, int expiresIn) GenerateToken(ApplicationUser user, IEnumerable<string>roles, IEnumerable<string> permissions)
+
+        public (string token, int expiresIn) GenerateToken(ApplicationUser user, IEnumerable<string> roles, IEnumerable<string> permissions)
         {
 
 
@@ -61,11 +61,11 @@ namespace SurveyBasket.Authentication
                     ValidateAudience = false,
                     ClockSkew = TimeSpan.Zero
 
-                },out SecurityToken validatedToken);
+                }, out SecurityToken validatedToken);
                 var jwtToken = (JwtSecurityToken)validatedToken;
                 return jwtToken.Claims.First(x => x.Type == JwtRegisteredClaimNames.Sub).Value;
             }
-            catch 
+            catch
             {
 
                 return null;

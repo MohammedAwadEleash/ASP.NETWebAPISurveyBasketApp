@@ -3,7 +3,7 @@ namespace SurveyBasket.Authentication.Filters
 {
     public class PermissionAuthorizationHandler : AuthorizationHandler<PermissionRequirement>
     {
-        protected override async  Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
+        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, PermissionRequirement requirement)
         {
 
             var user = context.User.Identity;
@@ -15,7 +15,7 @@ namespace SurveyBasket.Authentication.Filters
 
             if (hasPermission)
 
-            context.Succeed(requirement);
+                context.Succeed(requirement);
             return;
         }
     }

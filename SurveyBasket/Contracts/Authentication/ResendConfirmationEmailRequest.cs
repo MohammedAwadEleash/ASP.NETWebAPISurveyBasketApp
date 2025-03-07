@@ -1,5 +1,6 @@
-﻿namespace SurveyBasket.Contracts.Authentication { 
+﻿namespace SurveyBasket.Contracts.Authentication
+{
 
-    public record  ResendConfirmationEmailRequest(string Email );
-   
+    public record ResendConfirmationEmailRequest(string Email);
+
 }

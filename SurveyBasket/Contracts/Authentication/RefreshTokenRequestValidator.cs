@@ -7,6 +7,6 @@
             RuleFor(r => r.Token).NotEmpty();
             RuleFor(r => r.RefreshToken).NotEmpty();
         }
-    
+
     }
 }

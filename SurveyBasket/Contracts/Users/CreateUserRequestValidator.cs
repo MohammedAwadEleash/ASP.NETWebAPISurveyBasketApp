@@ -1,5 +1,4 @@
-﻿using SurveyBasket.Contracts.Users;
-
+﻿
 namespace SurveyBasket.Contracts
 {
     public class CreateUserRequestValidator : AbstractValidator<CreateUserRequest>
@@ -37,8 +36,8 @@ namespace SurveyBasket.Contracts
         }
     }
 
-    }
-       
+}
+
 
 
 

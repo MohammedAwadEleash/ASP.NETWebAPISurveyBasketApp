@@ -12,4 +12,3 @@
         public const string MemberRoleConcurrencyStamp = "01954f58-a423-79c6-aceb-50377fb9e627";
     }
 }
- 

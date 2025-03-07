@@ -1,10 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Query;
-using Microsoft.EntityFrameworkCore.Query.Internal;
-using Org.BouncyCastle.Asn1.Pkcs;
-using SurveyBasket.Contracts.Roles;
-using System.Security.Claims;
-using System.Threading;
+﻿using SurveyBasket.Contracts.Roles;
 
 namespace SurveyBasket.Services
 {
@@ -13,8 +7,8 @@ namespace SurveyBasket.Services
         private readonly RoleManager<ApplicationRole> _roleManager = roleManager;
         private readonly ApplicationDbContext _context = context;
 
-        public async Task<IEnumerable<RoleResponse>> GetAllAsync(bool includeDisabled=false, CancellationToken cancellationToken=default) =>
-            await _roleManager.Roles.Where(r => !r.IsDefault && (!r.IsDeleted || includeDisabled )) 
+        public async Task<IEnumerable<RoleResponse>> GetAllAsync(bool includeDisabled = false, CancellationToken cancellationToken = default) =>
+            await _roleManager.Roles.Where(r => !r.IsDefault && (!r.IsDeleted || includeDisabled))
             .ProjectToType<RoleResponse>().ToListAsync(cancellationToken);
 
 
@@ -40,9 +34,9 @@ namespace SurveyBasket.Services
 
 
 
-    }
+        }
 
-        public async Task<Result<RoleDetailResponse>>AddAsync(RoleRequest request, CancellationToken cancellationToken=default)
+        public async Task<Result<RoleDetailResponse>> AddAsync(RoleRequest request, CancellationToken cancellationToken = default)
         {
 
             var roleIsExists = await _roleManager.RoleExistsAsync(request.Name);
@@ -52,7 +46,7 @@ namespace SurveyBasket.Services
 
             var allowedPermissions = Permissions.GetAllPermissions();
 
-            if(request.Permissions.Except(allowedPermissions).Any())
+            if (request.Permissions.Except(allowedPermissions).Any())
                 return Result.Failure<RoleDetailResponse>(RoleErrors.InvalidPermissions);
 
 
@@ -67,7 +61,7 @@ namespace SurveyBasket.Services
 
             var result = await _roleManager.CreateAsync(role);
 
-            if(result.Succeeded)
+            if (result.Succeeded)
             {
 
                 var permissions = request.Permissions.Select(p => new IdentityRoleClaim<string>
@@ -82,7 +76,7 @@ namespace SurveyBasket.Services
 
                 await _context.SaveChangesAsync(cancellationToken);
 
-                var response = new RoleDetailResponse(role.Id, role.Name, role.IsDeleted,request.Permissions);
+                var response = new RoleDetailResponse(role.Id, role.Name, role.IsDeleted, request.Permissions);
 
                 return Result.Success(response);
             }
@@ -95,14 +89,14 @@ namespace SurveyBasket.Services
         }
 
 
-        public async Task<Result> UpdateAsync(string id ,RoleRequest request, CancellationToken cancellationToken = default)
+        public async Task<Result> UpdateAsync(string id, RoleRequest request, CancellationToken cancellationToken = default)
         {
 
 
-            var role =await  _roleManager.FindByIdAsync(id);
+            var role = await _roleManager.FindByIdAsync(id);
 
-            if(role is null )
-          return Result.Failure(RoleErrors.RoleNotFound);
+            if (role is null)
+                return Result.Failure(RoleErrors.RoleNotFound);
 
 
 
@@ -136,14 +130,14 @@ namespace SurveyBasket.Services
 
 
                 var newPermissions = request.Permissions.Except(currentpermissions)
-                    .Select(p=> new IdentityRoleClaim<string>
-                {
+                    .Select(p => new IdentityRoleClaim<string>
+                    {
 
-                    RoleId = role.Id,
-                    ClaimType = Permissions.Type,
-                    ClaimValue = p
+                        RoleId = role.Id,
+                        ClaimType = Permissions.Type,
+                        ClaimValue = p
 
-                });
+                    });
 
 
                 var removedPermissions = currentpermissions.Except(request.Permissions);
@@ -155,7 +149,7 @@ namespace SurveyBasket.Services
                     .ExecuteDeleteAsync();
 
 
-              await   _context.RoleClaims.AddRangeAsync(newPermissions, cancellationToken);
+                await _context.RoleClaims.AddRangeAsync(newPermissions, cancellationToken);
                 await _context.SaveChangesAsync(cancellationToken);
 
 
@@ -176,9 +170,9 @@ namespace SurveyBasket.Services
         public async Task<Result> ToggleStatusAsync(string id, CancellationToken cancellationToken = default)
         {
 
-            var role  = await _roleManager.FindByIdAsync(id);
+            var role = await _roleManager.FindByIdAsync(id);
 
-            if(role is null)
+            if (role is null)
                 return Result.Failure(RoleErrors.RoleNotFound);
 
 

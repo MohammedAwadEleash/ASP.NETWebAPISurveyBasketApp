@@ -8,5 +8,5 @@ namespace SurveyBasket.Persistence.EntitiesConfigurations
         {
             builder.HasIndex(v => new { v.PollId, v.UserId }).IsUnique();
         }
-    }   
+    }
 }

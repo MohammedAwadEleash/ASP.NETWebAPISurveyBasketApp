@@ -1,6 +1,4 @@
-﻿using SurveyBasket.Contracts.Questions;
-using SurveyBasket.Contracts.Users;
-using System.Data;
+﻿using System.Data;
 
 namespace SurveyBasket.Mapping
 {

@@ -1,10 +1,4 @@
-﻿
-
-using Microsoft.AspNetCore.Identity;
-using SurveyBasket.Abstractions.Consts;
-using System.Security.Cryptography.Xml;
-
-namespace SurveyBasket.Persistence.EntitiesConfigurations
+﻿namespace SurveyBasket.Persistence.EntitiesConfigurations
 {
     public class ApplicationUserConfiguration : IEntityTypeConfiguration<ApplicationUser>
     {
@@ -16,8 +10,6 @@ namespace SurveyBasket.Persistence.EntitiesConfigurations
             builder.Property(user => user.LastName).HasMaxLength(100);
 
             //Default Data :
-
-            var passwordHasher = new PasswordHasher<ApplicationUser>();
 
             builder.HasData(new ApplicationUser
             {
@@ -33,15 +25,7 @@ namespace SurveyBasket.Persistence.EntitiesConfigurations
                 SecurityStamp = DefaultUsers.AdminSecurityStamp,
                 ConcurrencyStamp = DefaultUsers.AdminConcurrencyStamp,
                 EmailConfirmed = true,
-                PasswordHash = passwordHasher.HashPassword(null!, DefaultUsers.AdminPassword)
-
-
-
-
-
-
-
-
+                PasswordHash = DefaultUsers.AdminPasswordHash
 
             });
 

@@ -1,6 +1,5 @@
 ﻿
 using SurveyBasket.Contracts;
-using System.Collections.Generic;
 
 namespace SurveyBasket.Services
 {
@@ -8,15 +7,15 @@ namespace SurveyBasket.Services
     {
         private readonly ApplicationDbContext _context = context;
 
-     
 
-        public async Task<Result<PollVotesResponse>> GetPollVotesAsync(int pollId, CancellationToken cancellationToken=default)
+
+        public async Task<Result<PollVotesResponse>> GetPollVotesAsync(int pollId, CancellationToken cancellationToken = default)
         {
             var pollVotes = await _context.Polls
                 .Where(p => p.Id == pollId)
                 .Select(p => new PollVotesResponse(
                     p.Title,
-                    p.Votes.Select (v => new VoteResponse(
+                    p.Votes.Select(v => new VoteResponse(
                         $"{v.User.FirstName} {v.User.LastName}",
                         v.SubmittedOn,
                         v.VoteAnswers.Select(va => new QuestionAnswerResponse(
@@ -35,10 +34,11 @@ namespace SurveyBasket.Services
 
         }
 
-        public async Task<Result<IEnumerable<VotesPerDayResponse>>> GetVotesPerDayAsync(int pollId, CancellationToken cancellationToken = default) {
+        public async Task<Result<IEnumerable<VotesPerDayResponse>>> GetVotesPerDayAsync(int pollId, CancellationToken cancellationToken = default)
+        {
             var pollIsExists = await _context.Polls.AnyAsync(p => p.Id == pollId, cancellationToken);
 
-            if(!pollIsExists)
+            if (!pollIsExists)
                 return Result.Failure<IEnumerable<VotesPerDayResponse>>(PollErrors.PollNotFound);
 
             var votesPerDay = await _context.Votes.Where(v => v.PollId == pollId)

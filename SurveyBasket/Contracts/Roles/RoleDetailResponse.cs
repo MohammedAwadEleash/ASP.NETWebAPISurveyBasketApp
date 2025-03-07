@@ -1,12 +1,12 @@
 ﻿namespace SurveyBasket.Contracts.Roles
 {
-    public record  RoleDetailResponse(
+    public record RoleDetailResponse(
         string Id,
         string Name,
         bool IsDeleted,
-        IEnumerable<string>Permissions
-        
+        IEnumerable<string> Permissions
+
         );
-    
-   
+
+
 }

@@ -1,6 +1,6 @@
 ﻿namespace SurveyBasket.Errors
 {
-    public  static class VoteErrors
+    public static class VoteErrors
     {
 
         public static readonly Error InvalidQuestions = new Error("Vote.InvalidQuestions ", "Invalid questions", StatusCodes.Status404NotFound);

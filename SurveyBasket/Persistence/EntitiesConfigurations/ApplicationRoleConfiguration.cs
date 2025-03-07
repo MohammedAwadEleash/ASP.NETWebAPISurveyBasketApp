@@ -1,14 +1,11 @@
-﻿
-using SurveyBasket.Abstractions.Consts;
-
-namespace SurveyBasket.Persistence.EntitiesConfigurations
+﻿namespace SurveyBasket.Persistence.EntitiesConfigurations
 {
     public class ApplicationRoleConfiguration : IEntityTypeConfiguration<ApplicationRole>
     {
         public void Configure(EntityTypeBuilder<ApplicationRole> builder)
         {
             //Default Data :
-           
+
             builder.HasData([
                 new ApplicationRole
             {
@@ -16,8 +13,6 @@ namespace SurveyBasket.Persistence.EntitiesConfigurations
                 Name = DefaultRoles.Admin,
                 NormalizedName =DefaultRoles.Admin.ToUpper(),
                 ConcurrencyStamp= DefaultRoles.AdminRoleConcurrencyStamp
-
-
             },
 
            new ApplicationRole
@@ -28,14 +23,12 @@ namespace SurveyBasket.Persistence.EntitiesConfigurations
                 ConcurrencyStamp= DefaultRoles.MemberRoleConcurrencyStamp,
                 IsDefault=true
 
-
-
             }
 
 
            ]);
 
-        
+
 
         }
     }

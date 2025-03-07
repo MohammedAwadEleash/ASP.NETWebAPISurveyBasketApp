@@ -1,9 +1,6 @@
-﻿
-using Hangfire;
-using Microsoft.AspNetCore.Identity.UI.Services;
+﻿using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.WebUtilities;
 using SurveyBasket.Authentication;
-using SurveyBasket.Errors;
 using SurveyBasket.Helpers;
 using System.Security.Cryptography;
 using System.Text;
@@ -38,7 +35,7 @@ namespace SurveyBasket.Services
 
                 return Result.Failure<AuthResponse>(UserErrors.InvalidCredentials);
 
-            if(user.IsDisabled)
+            if (user.IsDisabled)
                 return Result.Failure<AuthResponse>(UserErrors.DisabledUser);
 
 
@@ -162,7 +159,7 @@ namespace SurveyBasket.Services
 
 
         }
-        
+
 
 
         public async Task<Result> RevokeRefreshTokenAsync(string token, string refreshToken, CancellationToken cancellationToken = default)
@@ -489,6 +486,6 @@ namespace SurveyBasket.Services
 
             return (userRoles, userPermissions);
 
-    }
+        }
     }
 }

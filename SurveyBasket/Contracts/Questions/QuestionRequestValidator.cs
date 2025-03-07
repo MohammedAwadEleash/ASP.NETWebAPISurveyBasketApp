@@ -1,8 +1,6 @@
-﻿using FluentValidation.AspNetCore;
-
-namespace SurveyBasket.Contracts.Questions
+﻿namespace SurveyBasket.Contracts.Questions
 {
-    public class QuestionRequestValidator: AbstractValidator<QuestionRequest>
+    public class QuestionRequestValidator : AbstractValidator<QuestionRequest>
     {
 
         public QuestionRequestValidator()

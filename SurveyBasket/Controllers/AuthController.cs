@@ -1,7 +1,4 @@
 ﻿
-using Microsoft.AspNetCore.RateLimiting;
-using Microsoft.Extensions.Options;
-using SurveyBasket.Authentication;
 
 namespace SurveyBasket.Controllers
 {
@@ -16,7 +13,7 @@ namespace SurveyBasket.Controllers
 
         [HttpPost("")]
 
-        public async Task<IActionResult>Login([FromBody] LoginRequest request ,CancellationToken cancellationToken)
+        public async Task<IActionResult> Login([FromBody] LoginRequest request, CancellationToken cancellationToken)
         {
             _logger.LogInformation("Logging with email: {email} and password: {password}", request.Email, request.Password);
 
@@ -38,7 +35,7 @@ namespace SurveyBasket.Controllers
 
 
             return authResult.IsSuccess ? Ok(authResult.Value) : authResult.ToProblem();
-          
+
         }
 
         [HttpPost("revoke-refresh-token")]
@@ -55,10 +52,10 @@ namespace SurveyBasket.Controllers
 
         [HttpPost("register")]
         [DisableRateLimiting]
-        public async Task<IActionResult>Register([FromBody] RegisterRequest request, CancellationToken cancellationToken)
+        public async Task<IActionResult> Register([FromBody] RegisterRequest request, CancellationToken cancellationToken)
         {
 
-            var authResult = await _authService.RegisterAsync(request , cancellationToken);
+            var authResult = await _authService.RegisterAsync(request, cancellationToken);
 
 
             return authResult.IsSuccess ? Ok() : authResult.ToProblem();
@@ -109,7 +106,7 @@ namespace SurveyBasket.Controllers
 
         public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
         {
-            
+
 
             var authResult = await _authService.ResetPasswordAsync(request);
 
@@ -117,7 +114,7 @@ namespace SurveyBasket.Controllers
             return authResult.IsSuccess ? Ok() : authResult.ToProblem();
 
         }
-     
+
     }
 }
 

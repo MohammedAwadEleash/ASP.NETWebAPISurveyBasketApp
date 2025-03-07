@@ -1,6 +1,6 @@
 ﻿namespace SurveyBasket.Contracts.Users
 {
-    public record  CreateUserRequest(
+    public record CreateUserRequest(
         string FirstName,
         string LastName,
         string Email,
@@ -10,5 +10,5 @@
 
 
         );
-    
+
 }

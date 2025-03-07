@@ -1,11 +1,10 @@
 ﻿
 
 using Asp.Versioning;
-using Microsoft.AspNetCore.RateLimiting;
 
 namespace SurveyBasket.Controllers;
 
-[ApiVersion(1, Deprecated =true)]
+[ApiVersion(1, Deprecated = true)]
 [ApiVersion(2)]
 
 [Route("api/[controller]")]
@@ -66,11 +65,11 @@ public class PollsController(IPollService pollService) : ControllerBase
                   ? Ok(result.Value)
                   : result.ToProblem();
     }
-        [HttpPost("")]
+    [HttpPost("")]
     [HasPermission(Permissions.AddPolls)]
 
     public async Task<IActionResult> Add([FromBody] PollRequest request,
-        CancellationToken cancellationToken)
+    CancellationToken cancellationToken)
     {
         var result = await _pollService.AddAsync(request, cancellationToken);
 
@@ -87,22 +86,22 @@ public class PollsController(IPollService pollService) : ControllerBase
     {
         var result = await _pollService.UpdateAsync(id, request, cancellationToken);
 
-        return result.IsSuccess ? NoContent() :   result.ToProblem();
+        return result.IsSuccess ? NoContent() : result.ToProblem();
     }
 
-        [HttpDelete("{id}")]
+    [HttpDelete("{id}")]
     [HasPermission(Permissions.DeletePolls)]
 
     public async Task<IActionResult> Delete([FromRoute] int id, CancellationToken cancellationToken)
     {
         var result = await _pollService.DeleteAsync(id, cancellationToken);
 
-        return result.IsSuccess ? NoContent() : 
+        return result.IsSuccess ? NoContent() :
             result.ToProblem();
     }
 
     [HttpPut("{id}/togglePublish")]
-      [HasPermission(Permissions.UpdatePolls)]
+    [HasPermission(Permissions.UpdatePolls)]
 
     public async Task<IActionResult> TogglePublish([FromRoute] int id, CancellationToken cancellationToken)
     {

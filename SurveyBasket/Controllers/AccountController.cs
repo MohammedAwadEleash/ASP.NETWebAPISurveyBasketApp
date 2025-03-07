@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.RateLimiting;
-using SurveyBasket.Contracts.Users;
-
-namespace SurveyBasket.Controllers
+﻿namespace SurveyBasket.Controllers
 {
     [Route("account-info")]
     [ApiController]
@@ -14,15 +11,15 @@ namespace SurveyBasket.Controllers
         private readonly IUserService _userService = userService;
 
         [HttpGet("")]
-        public async Task<IActionResult>UserInfo()
+        public async Task<IActionResult> UserInfo()
         {
 
-            var result = await  _userService.GetProfileAsync(User.GetUserId()!);
+            var result = await _userService.GetProfileAsync(User.GetUserId()!);
 
 
 
             return Ok(result.Value);
-             
+
 
         }
 
@@ -30,12 +27,12 @@ namespace SurveyBasket.Controllers
         public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfileRequest request)
         {
 
-            var result = await _userService.UpdateProfileAsync( User.GetUserId()!, request);
+            var result = await _userService.UpdateProfileAsync(User.GetUserId()!, request);
 
 
 
             return NoContent();
-            
+
 
 
         }

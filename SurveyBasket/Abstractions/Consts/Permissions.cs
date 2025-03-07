@@ -1,6 +1,6 @@
 ﻿namespace SurveyBasket.Abstractions.Consts
 {
-    public static  class Permissions
+    public static class Permissions
     {
         public static string Type { get; } = "permissions";
 

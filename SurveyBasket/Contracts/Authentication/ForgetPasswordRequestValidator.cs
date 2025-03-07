@@ -9,8 +9,8 @@ namespace SurveyBasket.Contracts.Authentication
                        .NotEmpty()
                        .EmailAddress();
 
-          
+
         }
     }
-  
+
 }

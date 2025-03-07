@@ -1,6 +1,6 @@
 ﻿namespace SurveyBasket.Entities
 {
-    public sealed class Question :BaseEntity
+    public sealed class Question : BaseEntity
     {
 
         public int Id { get; set; }

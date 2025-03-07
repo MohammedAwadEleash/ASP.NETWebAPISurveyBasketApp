@@ -9,9 +9,10 @@ The Survey Basket API is a comprehensive and user-friendly platform for managing
 
 ## 🛠 Tech Stack
 
-- **Backend Framework:** ASP.NET Core 8.0
+- **Backend Framework:** ASP.NET Core 9.0
 - **ORM:** Entity Framework Core
 - **Database:** SQL Server
+-  **LINQ:** Used for querying and manipulating data efficiently.
 - ✅ **SOLID Principles:** some of SOLID Principles  such as the single responsibility principle , Dependency Inversion Principle
 - ✅ **Architectural Principles:** Dependency Injection (DI)
 - **Authentication & Authorization:** ASP.NET Core Identity

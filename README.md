@@ -1,7 +1,7 @@
 # Survey Basket API
 
 
-![logo](![Uploading untitled-Survey Basket App Mind Map.png…]()3)
+<img width="1435" alt="untitled-Survey Basket App Mind Map" src="https://github.com/user-attachments/assets/9d177f04-7727-4942-9c5f-8c35ab715102" />
 
 ## 📋 Overview
 
@@ -50,11 +50,11 @@ The Survey Basket API is a comprehensive and user-friendly platform for managing
 - **💓 Health Checks:**  
   Integrates system health checks to monitor performance and maintain high uptime and reliability.
 
-- **🗃️ Distributed Caching:**  
-  Optimizes performance by caching frequently accessed data, significantly boosting response times.
+- **🗃️ Caching:**  
+- **Hybrid Caching:** (.NET9):Optimized performance with caching for frequently accessed data, significantly improving response times
 
 - **✉️ Email Confirmation:**  
-  Streamlines processes for user email verification, password modifications, and resets to further strengthen security.
+ Managed user email confirmations, password changes, and resets seamlessly to enhance security.
 
 - **📌 API Versioning:**  
   Supports multiple API versions to maintain backward compatibility and ease the transition as the project evolves.

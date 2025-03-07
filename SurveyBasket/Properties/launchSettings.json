@@ -3,7 +3,9 @@
     "http": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "swagger/index.html",
+      // "launchUrl": "swagger/index.html",
+      "launchUrl": "openapi/v1.json",
+
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
@@ -13,7 +15,8 @@
     "https": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "swagger/index.html",
+      // "launchUrl": "swagger/index.html",
+      "launchUrl": "openapi/v1.json",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
@@ -23,7 +26,8 @@
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "swagger",
+      // "launchUrl": "swagger/index.html",
+      "launchUrl": "openapi/v1.json",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

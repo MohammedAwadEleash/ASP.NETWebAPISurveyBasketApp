@@ -15,6 +15,9 @@ using Microsoft.Extensions.Options;
 using System.Threading.RateLimiting;
 using Asp.Versioning;
 
+using SurveyBasket.OpenApiTransformers;
+using Asp.Versioning.ApiExplorer;
+
 namespace SurveyBasket;
 
 public static class DependencyInjection
@@ -84,8 +87,8 @@ public static class DependencyInjection
 
         services.AddApiVersioning(options =>
         {
-         //   options.DefaultApiVersion = new ApiVersion(1);
-           // options.AssumeDefaultVersionWhenUnspecified = true;
+            options.DefaultApiVersion = new ApiVersion(1.0);
+            options.AssumeDefaultVersionWhenUnspecified = true;
             options.ReportApiVersions = true;
             options.ApiVersionReader = new HeaderApiVersionReader("x-api-version") ;
             
@@ -101,6 +104,10 @@ public static class DependencyInjection
             });
 
 
+
+        services.AddEndpointsApiExplorer().AddOpenApiServices();
+
+
         return services;
     }
 
@@ -109,8 +116,33 @@ public static class DependencyInjection
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
+      
 
         return services;
+    }
+
+    private static IServiceCollection AddOpenApiServices(this IServiceCollection services)
+    {
+        var serviceProvider = services.BuildServiceProvider();
+        var apiVersionDescriptionProvider = serviceProvider.GetRequiredService<IApiVersionDescriptionProvider>();
+
+        foreach (var description in apiVersionDescriptionProvider.ApiVersionDescriptions)
+        {
+            services.AddOpenApi(description.GroupName, options =>
+            {
+                options.AddDocumentTransformer<BearerSecuritySchemeTransformer>();
+                options.AddDocumentTransformer(new ApiVersioningTransformer(description));
+               
+
+
+                });
+
+            
+        }
+
+
+        return services;
+
     }
 
     private static IServiceCollection AddMapsterConfig(this IServiceCollection services)

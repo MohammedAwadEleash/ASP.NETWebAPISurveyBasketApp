@@ -5,6 +5,7 @@ using Serilog;
 using SurveyBasket;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using HealthChecks.UI.Client;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +16,7 @@ builder.Services.AddDependencies(builder.Configuration);
 
 builder.Host.UseSerilog((context, configuration) =>
 
-{
+{ 
     configuration.ReadFrom.Configuration(context.Configuration);
 
 });
@@ -24,9 +25,18 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-
+    app.MapOpenApi();
+    app.MapScalarApiReference();
+    ////app.UseSwagger();
+    ////app.UseSwaggerUI(options =>
+    ////{
+    ////    var descriptions = app.DescribeApiVersions();
+    ////    foreach (var description in descriptions)
+    ////    {
+    ////        options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
+    ////    }
+    ////}
+    ////);
 }
 
 app.UseHangfireDashboard("/jobs", new DashboardOptions

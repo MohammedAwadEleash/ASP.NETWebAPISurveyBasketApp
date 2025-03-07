@@ -65,10 +65,10 @@ The Survey Basket API is a comprehensive and user-friendly platform for managing
   Integrates system health checks to monitor performance and maintain high uptime and reliability.
 
 - **🗃️ Caching:**  
-- **(Cross-Origin Resource Sharing):** (.NET9):Optimized performance with caching for frequently accessed data, significantly improving response times.
+- **Hybrid Caching (.NET9):** (.NET9):Optimized performance with caching for frequently accessed data, significantly improving response times.
 
- -**🗃️ CORS:**  
--**🗃️ CORS:**: a security feature implemented by web browsers to prevent web pages from making requests to a different domain than the one that served the web page. 
+ -**🚦 CORS:**  
+-**(Cross-Origin Resource Sharing):**: a security feature implemented by web browsers to prevent web pages from making requests to a different domain than the one that served the web page. 
 
 - **✉️ Email Confirmation:**  
  Managed user email confirmations, password changes, and resets seamlessly to enhance security.

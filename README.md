@@ -32,7 +32,7 @@ The Survey Basket API is a comprehensive and user-friendly platform for managing
 - **🛠️ Structured Error Handling:**  
   Adopts the result pattern to deliver clear, actionable feedback for error management.
 
-- **🔄 Automapper/Mapster Integration:**  
+- **🔄 Mapping: Mapster :**  
   Employs efficient object mapping between models to improve data handling and reduce boilerplate code.
 
 - **✅ Fluent Validation:**  

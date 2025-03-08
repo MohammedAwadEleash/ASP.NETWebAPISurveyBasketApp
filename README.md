@@ -14,7 +14,7 @@ The Survey Basket API is a comprehensive and user-friendly platform for managing
 -  **LINQ:** Used for querying and manipulating data efficiently.
 - ✅ **SOLID Principles:** some of SOLID Principles  such as the single responsibility principle , Dependency Inversion Principle
 -
-### Design Patterns & Architecture
+### Design Patterns & Architecture Pattern:
 
 - ✅ **Service Layer Pattern**  
   The service layer encapsulates the core business logic, invoked by controllers (API) for performing operations. This separation improves maintainability, reusability, and testability, while allowing controllers to focus solely on handling HTTP requests and responses.

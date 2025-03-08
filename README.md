@@ -19,7 +19,7 @@ The Survey Basket API is a comprehensive and user-friendly platform for managing
 
 - ✅ **Dependency Injection (DI)**  
   Leverages DI to manage system dependencies, promoting loose coupling between components, which facilitates easier maintenance and enhances the extensibility of the system.
-
+ ---
 - **Authentication & Authorization:** ASP.NET Core Identity
 - **Logging:** Serilog (used for logging errors and exceptions)
 

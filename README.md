@@ -76,7 +76,7 @@ The Survey Basket API is a comprehensive and user-friendly platform for managing
 - **📌 API Versioning:**  
   Supports multiple API versions to maintain backward compatibility and ease the transition as the project evolves.
 
-- **🗳️Data Seeding:**:
+- **🗳️ Data Seeding:**
 Automatically seeds essential data, including admin roles and users, to ensure the system starts with pre-configured data, simplifying the setup and initial use.
 
 ## 🔧 Getting Started

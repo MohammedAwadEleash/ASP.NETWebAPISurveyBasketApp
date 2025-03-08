@@ -37,7 +37,7 @@ The Survey Basket API is a comprehensive and user-friendly platform for managing
 ## 🚀 Key Highlights
 
 - **🔒 User & Role Management:**  
-  Utilizes JWT for robust authentication and authorization, ensuring smooth and secure access control.
+  Utilizes JWT Token for robust authentication and authorization, ensuring smooth and secure access control.
 
 - **📈 Polls & Surveys:**  
   Empowers users to effortlessly create, manage, and participate in polls, streamlining data collection and engagement.

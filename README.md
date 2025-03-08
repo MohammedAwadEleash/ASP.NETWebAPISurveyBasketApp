@@ -83,7 +83,7 @@ Automatically seeds essential data, including admin roles and users, to ensure t
 
 To set up the project locally:
 
-1. **Clone the Repository:**
+ **Clone the Repository:**
    ```bash
    git clone  https://github.com/MohammedAwadEleash/ASP.NETWebAPISurveyBasketApp
 

@@ -89,4 +89,14 @@ To set up the project locally:
  ```
 ## API documentation UI:
 
+![Swagger UI - Google Chrome 3_8_2025 6_45_46 PM](https://github.com/user-attachments/assets/81d3505e-41f1-43b0-8351-c1fcc91f7a35)
+![Swagger UI - Google Chrome 3_8_2025 6_46_03 PM](https://github.com/user-attachments/assets/30418e3b-813a-41bc-87c6-3d2de739dcce)
+![Swagger UI - Google Chrome 3_8_2025 6_46_10 PM](https://github.com/user-attachments/assets/7557dab7-e76d-46c3-a001-861e9b6d54b9)
+![Swagger UI - Google Chrome 3_8_2025 6_46_20 PM](https://github.com/user-attachments/assets/76b74d22-ae3d-4ca0-950b-1ccafe543098)
+![Swagger UI - Google Chrome 3_8_2025 6_46_26 PM](https://github.com/user-attachments/assets/3d165f38-a08b-4d2b-98a1-fd9f17942dd6)
+![Swagger UI - Google Chrome 3_8_2025 6_46_34 PM](https://github.com/user-attachments/assets/88fbed00-ca64-40b1-adba-e447ddc59b40)
+![Swagger UI - Google Chrome 3_8_2025 6_55_45 PM](https://github.com/user-attachments/assets/4787c26c-2175-482d-8c57-eb07682a973d)
+![Swagger UI - Google Chrome 3_8_2025 6_55_50 PM](https://github.com/user-attachments/assets/8d572733-16d3-4e69-80bc-6334930dd643)
+![Swagger UI - Google Chrome 3_8_2025 7_08_04 PM](https://github.com/user-attachments/assets/9d273c52-58ca-4c47-a483-b5a316b73cec)
+
 

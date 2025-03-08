@@ -25,7 +25,7 @@ The Survey Basket API is a comprehensive and user-friendly platform for managing
 - **Logging:** Serilog (used for logging errors and exceptions)
 
 - **SOLID Principles:** Incorporates principles such as Single Responsibility and Dependency Inversion.
-- 
+  
 ## ✨ Features
 
 - **🗳️ Poll Management:** Create, update, and delete polls.

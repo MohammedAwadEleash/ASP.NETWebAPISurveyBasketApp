@@ -95,7 +95,7 @@ To set up the project locally:
 ![Swagger UI - Google Chrome 3_8_2025 6_46_20 PM](https://github.com/user-attachments/assets/76b74d22-ae3d-4ca0-950b-1ccafe543098)
 ![Swagger UI - Google Chrome 3_8_2025 6_46_26 PM](https://github.com/user-attachments/assets/3d165f38-a08b-4d2b-98a1-fd9f17942dd6)
 ![Swagger UI - Google Chrome 3_8_2025 6_46_34 PM](https://github.com/user-attachments/assets/88fbed00-ca64-40b1-adba-e447ddc59b40)
-![Swagger UI - Google Chrome 3_8_2025 7_29_09 PM](https://github.com/user-attachments/assets/91545a9f-75ea-4158-98ca-ed62248bb747)
+![Swagger UI - Google Chrome 3_8_2025 7_29_09 PM](https://github.com/user-attachments/assets/feb56861-abb6-4966-8cab-fc0cdd30ceec)
 ![Swagger UI - Google Chrome 3_8_2025 7_20_36 PM](https://github.com/user-attachments/assets/36030588-9489-478e-b151-16b32b643b2d)
 ![Swagger UI - Google Chrome 3_8_2025 7_08_04 PM](https://github.com/user-attachments/assets/9d273c52-58ca-4c47-a483-b5a316b73cec)
 

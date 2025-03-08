@@ -84,7 +84,7 @@ To set up the project locally:
 
  **Clone the Repository:**
    ```bash
-   git clone  https://github.com/MohammedAwadEleash/ASP.NETWebAPISurveyBasketApp
+   git clone  https://github.com/MohammedAwadEleash/ASP.NETWebAPISurveyBasketApp  .
 
 
 ## API documentation UI:

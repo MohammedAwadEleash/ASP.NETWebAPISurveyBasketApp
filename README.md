@@ -39,7 +39,7 @@ The Survey Basket API is a comprehensive and user-friendly platform for managing
   Implemented audit logging using Serilog to track changes on resources, ensuring transparency and accountability in user actions.
 
 
-- **⚠️ Centralized Exception Handling:**  
+- **⚠️  Exception Handling:**  
   Provides unified error management to handle exceptions gracefully, significantly enhancing the user experience.
 
 - **🛠️ Structured Error Handling:**  
@@ -86,7 +86,7 @@ To set up the project locally:
    ```bash
    git clone  https://github.com/MohammedAwadEleash/ASP.NETWebAPISurveyBasketApp  .
 
-
+ ```
 ## API documentation UI:
 
 

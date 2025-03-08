@@ -13,13 +13,14 @@ The Survey Basket API is a comprehensive and user-friendly platform for managing
 - **Database:** SQL Server
 -  **LINQ:** Used for querying and manipulating data efficiently.
 - ✅ **SOLID Principles:** some of SOLID Principles  such as the single responsibility principle , Dependency Inversion Principle
-- **Patterns:**
-- ✅**Service Layer Pattern**  
-  The service layer encapsulates the core business logic and is invoked by controllers (API) to perform operations. This separation improves code maintainability, reusability, and testability while allowing controllers to remain focused on managing HTTP requests and responses.
+-
+### Design Patterns & Architecture
+
+- ✅ **Service Layer Pattern**  
+  The service layer encapsulates the core business logic, invoked by controllers (API) for performing operations. This separation improves maintainability, reusability, and testability, while allowing controllers to focus solely on handling HTTP requests and responses.
 
 - ✅ **Dependency Injection (DI)**  
-  Leverages DI to manage system dependencies, promoting loose coupling between components, which facilitates easier maintenance and enhances the extensibility of the system.
- ---
+  DI is leveraged to manage system dependencies, promoting loose coupling between components, improving maintainability, and allowing easier extensibility of the system.
 - **Authentication & Authorization:** ASP.NET Core Identity
 - **Logging:** Serilog (used for logging errors and exceptions)
 
